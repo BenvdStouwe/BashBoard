@@ -28,6 +28,6 @@ describe('AppComponent', function () {
     fixture.detectChanges();
     const h1 = de.nativeElement;
     expect(h1.innerText).toMatch(/angular/i,
-      '<h1> should say something about "Angular"');
+      '<h1> should say something about "BashBoard"');
   });
 });
