@@ -9,6 +9,7 @@ export class OVModule implements IBashBoardModule {
     public defaultHeight: number = 1;
     public backgroundColor: string = '#ffb310';
     public textColor: string = '';
+    public content: HTMLDivElement;
 
     public station: string;
     public warnings: OVMelding[];
@@ -16,7 +17,7 @@ export class OVModule implements IBashBoardModule {
     private NSApiUserName: string;
     private NSApiPassWord: string;
 
-    public OVModule(userName: string, passWord: string, station: string, width?: number, height?: number) {
+    public constructor(userName: string, passWord: string, station: string, width?: number, height?: number) {
         this.NSApiUserName = userName;
         this.NSApiPassWord = passWord;
         this.station = station;
@@ -24,7 +25,13 @@ export class OVModule implements IBashBoardModule {
         this.height = height ? height : this.defaultHeight;
     }
 
-    public getWarnings(): void {
+    public generateContent(): HTMLDivElement {
+        var contentDiv = new HTMLDivElement;
+
+        return contentDiv;
+    }
+
+    public retrieveWarnings(): void {
         let warnings = this.getNSWarnings();
 
         this.warnings = warnings;

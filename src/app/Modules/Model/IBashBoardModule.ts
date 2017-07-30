@@ -6,4 +6,7 @@ export interface IBashBoardModule {
     defaultWidth: number;
     defaultHeight: number;
     backgroundColor: string;
+    content: HTMLDivElement;
+
+    showPopup?(): void;
 }
