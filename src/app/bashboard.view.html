@@ -1,4 +1,5 @@
 <div [ngGrid]>
-    <bashboard-module>
+    <bashboard-module *ngFor='let module of modules'
+        [module]='module'>
     </bashboard-module>
 </div>
