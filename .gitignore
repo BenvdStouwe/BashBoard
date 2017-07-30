@@ -10,6 +10,7 @@
 /tmp
 /src/**/*.js
 /src/**/*.js.map
+!/src/systemjs*.js
 
 # dependencies
 /node_modules
