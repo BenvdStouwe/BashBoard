@@ -1,9 +1,9 @@
-import { IBashBoardModule } from '../Model/IBashBoardModule';
+import { BashBoardModule } from '../Model/BashBoardModule';
 
-export class KlokModule implements IBashBoardModule {
+export class KlokModule extends BashBoardModule {
     public title: string = 'Klok';
-    public width: number;
-    public height: number;
+    public sizex: number;
+    public sizey: number;
     public defaultWidth: number = 1;
     public defaultHeight: number = 1;
     public backgroundColor: string = '#1d64d6';
@@ -13,7 +13,7 @@ export class KlokModule implements IBashBoardModule {
     private time: Date;
 
     public generateContent(): HTMLDivElement {
-        var contentDiv = new HTMLDivElement();
+        let contentDiv = new HTMLDivElement();
         contentDiv.innerHTML = this.time.getTime.toString();
         return contentDiv;
     }

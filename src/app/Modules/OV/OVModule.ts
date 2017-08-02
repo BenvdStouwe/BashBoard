@@ -1,10 +1,12 @@
-import { IBashBoardModule } from '../Model/IBashBoardModule';
+import { BashBoardModule } from '../Model/BashBoardModule';
 import { OVMelding } from './OVMelding';
 
-export class OVModule implements IBashBoardModule {
+export class OVModule extends BashBoardModule {
     public title: string = 'OV Info';
-    public width: number;
-    public height: number;
+    public col: number;
+    public row: number;
+    public sizex: number;
+    public sizey: number;
     public defaultWidth: number = 1;
     public defaultHeight: number = 1;
     public backgroundColor: string = '#ffb310';
@@ -18,15 +20,16 @@ export class OVModule implements IBashBoardModule {
     private NSApiPassWord: string;
 
     public constructor(userName: string, passWord: string, station: string, width?: number, height?: number) {
+        super();
         this.NSApiUserName = userName;
         this.NSApiPassWord = passWord;
         this.station = station;
-        this.width = width ? width : this.defaultWidth;
-        this.height = height ? height : this.defaultHeight;
+        this.sizex = width ? width : this.defaultWidth;
+        this.sizey = height ? height : this.defaultHeight;
     }
 
     public generateContent(): HTMLDivElement {
-        var contentDiv = new HTMLDivElement;
+        let contentDiv = new HTMLDivElement;
 
         return contentDiv;
     }

@@ -1,6 +1,19 @@
-<div [ngGrid]>
+<div [ngGrid]='gridConfig' [style.background-color]='gridConfig.background_color'>
     <bashboard-module *ngFor='let module of modules'
         [module]='module'>
     </bashboard-module>
-    <div (click)='addModule()'>Hallo</div>
+    <div id="menu">
+        <button (click)='addModule()' class='btn btn-default'>
+            <span class='glyphicon glyphicon-plus'>
+            </span>
+        </button>
+        <button (click)='saveLayout()' class='btn btn-default'>
+            <span class='glyphicon glyphicon-floppy-disk'>
+            </span>
+        </button>
+        <button (click)='saveLayout()' class='btn btn-default'>
+            <span class='glyphicon glyphicon-cog'>
+            </span>
+        </button>
+    </div>
 </div>
