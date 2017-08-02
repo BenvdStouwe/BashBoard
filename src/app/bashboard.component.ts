@@ -17,14 +17,18 @@ export class BashBoardComponent implements OnInit {
 
   ngOnInit(): void {
     this.modules = this.storage.retrieve(Storage.STORAGE_MODULES);
+    if (!this.modules) {
+      this.modules = [];
+    }
     let gridConfig = this.storage.retrieve(Storage.STORAGE_GRIDCONFIG);
     this.gridConfig = gridConfig != null ? gridConfig : this.getDefaultGridConfig();
   }
 
   public addModule(module: BashBoardModule) {
-    module = new OVModule('henk', 'sjaak', 'Deventer');
-    if (!this.modules) {
-      this.modules = [];
+    module = new OVModule();
+
+    if (module.needsSetup) {
+      module.showSettings();
     }
 
     this.modules.push(module);

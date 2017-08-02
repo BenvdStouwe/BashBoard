@@ -1,5 +1,5 @@
 <div [ngGrid]='gridConfig' [style.background-color]='gridConfig.background_color'>
-    <bashboard-module *ngFor='let module of modules'
+    <bashboard-module *ngFor='let module of modules' (changed)='saveLayout()'
         [module]='module'>
     </bashboard-module>
     <div id="menu">

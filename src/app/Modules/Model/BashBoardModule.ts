@@ -7,9 +7,11 @@ export abstract class BashBoardModule implements NgGridItemConfig {
     public sizex: number;
     public sizey: number;
     public subTitle?: string;
-    public defaultWidth: number;
-    public defaultHeight: number;
+    public defaultWidth: number = 1;
+    public defaultHeight: number = 1;
     public backgroundColor: string;
+    public refreshRate: number; // seconds
+    public needsSetup: boolean = false;
 
-    public showPopup?(): void;
+    public showSettings?(): void;
 }

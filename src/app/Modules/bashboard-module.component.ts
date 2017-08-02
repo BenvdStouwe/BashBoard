@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { BashBoardModule } from './Model/BashBoardModule';
 
 @Component({
@@ -7,4 +7,9 @@ import { BashBoardModule } from './Model/BashBoardModule';
 })
 export class BashBoardModuleComponent {
     @Input() public module: BashBoardModule;
+    @Output() public changed: EventEmitter<BashBoardModule> = new EventEmitter();
+
+    public moduleChanged() {
+        this.changed.emit(this.module);
+    }
 }
