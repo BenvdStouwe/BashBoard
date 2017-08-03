@@ -3,6 +3,7 @@ import { BashBoardModule } from './Modules/Model/BashBoardModule';
 import { OVModule } from './Modules/OV/OVModule';
 import { LocalStorageService } from 'ngx-webstorage';
 import { GridConfig } from './Modules/Model/NgGridConfig';
+import { KlokModule } from './Modules/Klok/KlokModule';
 
 @Component({
   selector: 'bashboard',
@@ -16,12 +17,10 @@ export class BashBoardComponent implements OnInit {
   constructor(private storage: LocalStorageService) {};
 
   ngOnInit(): void {
-    this.modules = this.storage.retrieve(Storage.STORAGE_MODULES);
-    if (!this.modules) {
-      this.modules = [];
-    }
-    let gridConfig = this.storage.retrieve(Storage.STORAGE_GRIDCONFIG);
-    this.gridConfig = gridConfig != null ? gridConfig : this.getDefaultGridConfig();
+    let modules =  this.storage.retrieve(Storage.MODULES);
+    this.modules = modules ? modules : this.getDefaultModuleLayout();
+    let gridConfig = this.storage.retrieve(Storage.GRIDCONFIG);
+    this.gridConfig = gridConfig ? gridConfig : this.getDefaultGridConfig();
   }
 
   public addModule(module: BashBoardModule) {
@@ -32,11 +31,20 @@ export class BashBoardComponent implements OnInit {
     }
 
     this.modules.push(module);
-    this.saveLayout();
+  }
+
+  public removeModule(module: BashBoardModule) {
+    this.modules = this.modules.filter(m => m !== module);
   }
 
   public saveLayout() {
-    this.storage.store(Storage.STORAGE_MODULES, this.modules);
+    this.storage.store(Storage.MODULES, this.modules);
+  }
+
+  private getDefaultModuleLayout(): BashBoardModule[] {
+    let modules: BashBoardModule[] = [];
+    modules.push(new KlokModule());
+    return modules;
   }
 
   private getDefaultGridConfig(): GridConfig {
@@ -45,6 +53,6 @@ export class BashBoardComponent implements OnInit {
 }
 
 export class Storage {
-  public static get STORAGE_MODULES(): string { return 'BashBoardModules'; }
-  public static get STORAGE_GRIDCONFIG(): string { return 'GridConfig'; }
+  public static readonly MODULES: string = 'BashBoardModules';
+  public static readonly GRIDCONFIG: string = 'GridConfig';
 }

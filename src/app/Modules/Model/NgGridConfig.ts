@@ -12,7 +12,7 @@ export class GridConfig implements INgGridConfig  {
     //  The maximum number of rows allowed. Set to 0 for infinite. Cannot be used with max_cols
     public max_rows: number = 5;
     //  The number of columns shown on screen when auto_resize is set to true. Set to 0 to not auto_resize. Will be overriden by max_cols
-    public visible_cols: number = 8;
+    public visible_cols: number = 10;
     //  The number of rows shown on screen when auto_resize is set to true. Set to 0 to not auto_resize. Will be overriden by max_rows
     public visible_rows: number = 0;
     //  The minimum number of columns allowed. Can be any number greater than or equal to 1.
