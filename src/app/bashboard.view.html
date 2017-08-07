@@ -1,5 +1,4 @@
 <div    [ngGrid]='gridConfig' 
-        [style.background-color]='gridConfig.background_color'
         (onItemChange)='saveLayout()'>
     <bashboard-module *ngFor='let module of modules' 
         [module]='module'>

@@ -1,5 +1,6 @@
 body {
-  background-color: #000;
+  --background-color: #000;
+  background-color: var(--background-color);
   color: #aaa;
 }
 
@@ -9,4 +10,9 @@ h1 {
 
 #menu {
   z-index: 999;
+}
+
+#bashboardGrid {
+  width: 100%;
+  height: 100% !important;
 }

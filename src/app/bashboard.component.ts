@@ -21,16 +21,17 @@ export class BashBoardComponent implements OnInit {
     this.modules = modules ? modules : this.getDefaultModuleLayout();
     let gridConfig = this.storage.retrieve(Storage.GRIDCONFIG);
     this.gridConfig = gridConfig ? gridConfig : this.getDefaultGridConfig();
+    document.querySelector('body').style.setProperty('--background-color', this.gridConfig.background_color);
   }
 
   public addModule(module: BashBoardModule) {
     module = new OVModule();
 
+    this.modules.push(module);
+
     if (module.needsSetup) {
       module.showSettings();
     }
-
-    this.modules.push(module);
   }
 
   public removeModule(module: BashBoardModule) {
