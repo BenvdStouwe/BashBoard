@@ -17,11 +17,11 @@ export class BashBoardComponent implements OnInit {
   constructor(private storage: LocalStorageService) {};
 
   ngOnInit(): void {
-    let modules =  this.storage.retrieve(Storage.MODULES);
+    let modules =  this.storage.retrieve(StorageNames.MODULES);
     this.modules = modules ? modules : this.getDefaultModuleLayout();
-    let gridConfig = this.storage.retrieve(Storage.GRIDCONFIG);
+    let gridConfig = this.storage.retrieve(StorageNames.GRIDCONFIG);
     this.gridConfig = gridConfig ? gridConfig : this.getDefaultGridConfig();
-    document.querySelector('body').style.setProperty('--background-color', this.gridConfig.background_color);
+    this.setStyleSettings();
   }
 
   public addModule(module: BashBoardModule) {
@@ -38,8 +38,12 @@ export class BashBoardComponent implements OnInit {
     this.modules = this.modules.filter(m => m !== module);
   }
 
+  public setStyleSettings() {
+    document.querySelector('body').style.setProperty(StyleSettingNames.BACKGROUNDCOLOR, this.gridConfig.background_color);
+  }
+
   public saveLayout() {
-    this.storage.store(Storage.MODULES, this.modules);
+    this.storage.store(StorageNames.MODULES, this.modules);
   }
 
   private getDefaultModuleLayout(): BashBoardModule[] {
@@ -53,7 +57,11 @@ export class BashBoardComponent implements OnInit {
   }
 }
 
-export class Storage {
+export class StorageNames {
   public static readonly MODULES: string = 'BashBoardModules';
   public static readonly GRIDCONFIG: string = 'GridConfig';
+}
+
+export class StyleSettingNames {
+  public static readonly BACKGROUNDCOLOR: string = '--background-color';
 }

@@ -43,5 +43,5 @@ export class GridConfig implements INgGridConfig  {
     //  When resizing the screen, with this true and auto_resize false, the grid will re-arrange to fit the screen size. Please note, at present this only works with cascade direction up.
     public limit_to_screen = false;
 
-    public background_color = '#333';
+    public background_color = '#000';
 }
