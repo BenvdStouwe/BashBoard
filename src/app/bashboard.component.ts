@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BashBoardModule } from './Modules/Model/BashBoardModule';
 import { OVModule } from './Modules/OV/OVModule';
 import { LocalStorageService } from 'ngx-webstorage';
-import { GridConfig } from './Modules/Model/NgGridConfig';
+import { GridConfig } from './Modules/Model/GridConfig';
 import { KlokModule } from './Modules/Klok/KlokModule';
 
 @Component({
@@ -10,6 +10,7 @@ import { KlokModule } from './Modules/Klok/KlokModule';
   templateUrl: './bashboard.view.html',
 })
 export class BashBoardComponent implements OnInit {
+  public visible = false;
 
   public modules: BashBoardModule[];
   public gridConfig: GridConfig;
@@ -17,11 +18,10 @@ export class BashBoardComponent implements OnInit {
   constructor(private storage: LocalStorageService) {};
 
   ngOnInit(): void {
-    let modules =  this.storage.retrieve(StorageNames.MODULES);
-    this.modules = modules ? modules : this.getDefaultModuleLayout();
-    let gridConfig = this.storage.retrieve(StorageNames.GRIDCONFIG);
-    this.gridConfig = gridConfig ? gridConfig : this.getDefaultGridConfig();
+    this.modules = this.getModules();
+    this.gridConfig = this.getGridConfig();
     this.setStyleSettings();
+    setTimeout(() => this.visible = true, 1);
   }
 
   public addModule(module: BashBoardModule) {
@@ -38,18 +38,33 @@ export class BashBoardComponent implements OnInit {
     this.modules = this.modules.filter(m => m !== module);
   }
 
+  public openSettings() {
+  }
+
   public setStyleSettings() {
-    document.querySelector('body').style.setProperty(StyleSettingNames.BACKGROUNDCOLOR, this.gridConfig.background_color);
+    let bodyElement = document.querySelector('body');
+    bodyElement.style.setProperty(StyleSettingNames.BACKGROUNDCOLOR, this.gridConfig.background_color);
+    bodyElement.style.setProperty(StyleSettingNames.BORDERWIDTH, this.gridConfig.border_width + 'px');
   }
 
   public saveLayout() {
     this.storage.store(StorageNames.MODULES, this.modules);
   }
 
+  private getModules(): BashBoardModule[] {
+    let modules =  this.storage.retrieve(StorageNames.MODULES);
+    return modules ? modules : this.getDefaultModuleLayout();
+  }
+
   private getDefaultModuleLayout(): BashBoardModule[] {
     let modules: BashBoardModule[] = [];
     modules.push(new KlokModule());
     return modules;
+  }
+
+  private getGridConfig(): GridConfig {
+    let gridConfig = this.storage.retrieve(StorageNames.GRIDCONFIG);
+    return gridConfig ? gridConfig : this.getDefaultGridConfig();
   }
 
   private getDefaultGridConfig(): GridConfig {
@@ -64,4 +79,5 @@ export class StorageNames {
 
 export class StyleSettingNames {
   public static readonly BACKGROUNDCOLOR: string = '--background-color';
+  public static readonly BORDERWIDTH: string = '--border-width';
 }

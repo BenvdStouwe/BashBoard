@@ -39,9 +39,17 @@ export class GridConfig implements INgGridConfig  {
     public maintain_ratio = true;
     //  When adding new items, will use that items position ahead of existing items
     public prefer_new = false;
-    // tslint:disable-next-line:max-line-length
-    //  When resizing the screen, with this true and auto_resize false, the grid will re-arrange to fit the screen size. Please note, at present this only works with cascade direction up.
+    //  When resizing the screen, with this true and auto_resize false, the grid will re-arrange to fit the screen size.
+    //  Please note, at present this only works with cascade direction up.
     public limit_to_screen = false;
 
     public background_color = '#000';
+
+    public get border_width(): number {
+        return this.margins[0];
+    }
+
+    public set border_width(width: number) {
+        this.margins = [width];
+    }
 }
