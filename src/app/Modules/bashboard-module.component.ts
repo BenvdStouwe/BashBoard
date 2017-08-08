@@ -6,11 +6,5 @@ import { BashBoardModule } from './Model/BashBoardModule';
     templateUrl: './bashboard-module.view.html'
 })
 export class BashBoardModuleComponent {
-    public visible = false;
-
     @Input() public module: BashBoardModule;
-
-    ngOnInit() {
-        setTimeout(() => this.visible = true, 100);
-    }
 }
