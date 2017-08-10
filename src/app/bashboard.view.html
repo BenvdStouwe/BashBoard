@@ -1,9 +1,12 @@
 <div    [class.show]='visible' class='step'
         [ngGrid]='gridConfig' 
-        (onItemChange)='saveLayout()'>
+        (onItemChange)='saveLayout()'
+        (contextmenu)='onContextMenu($event)'>
     <bashboard-module *ngFor='let module of modules' 
         [module]='module'>
     </bashboard-module>
+    <contextmenu>
+    </contextmenu>
     <div id="menu">
         <button (click)='addModule()' class='btn btn-default'>
             <span class='glyphicon glyphicon-plus'>

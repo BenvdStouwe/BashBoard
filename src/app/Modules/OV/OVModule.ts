@@ -26,4 +26,8 @@ export class OVModule extends BashBoardModule {
     public getNSWarnings(): OVMelding[] {
         return new Array<OVMelding>();
     }
+
+    public showSettings(): void {
+        console.log('Settings');
+    }
 }

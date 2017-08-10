@@ -19,16 +19,8 @@ export class GridConfig implements INgGridConfig  {
     public min_cols = 0;
     //  The minimum number of rows allowed. Can be any number greater than or equal to 1.
     public min_rows = 0;
-    //  The width of each column
-    public col_width = 250;
-    //  The height of each row
-    public row_height = 250;
     //  The direction to cascade grid items (up, right, down, left)
     public cascade = '';
-    //  The minimum width of an item. If greater than col_width, this will update the value of min_cols
-    public min_width = 100;
-    //  The minimum height of an item. If greater than row_height, this will update the value of min_rows
-    public min_height = 100;
     //  Fix all item movements to the grid
     public fix_to_grid = false;
     //  Automatically add required element styles at run-time
@@ -42,6 +34,7 @@ export class GridConfig implements INgGridConfig  {
     //  When resizing the screen, with this true and auto_resize false, the grid will re-arrange to fit the screen size.
     //  Please note, at present this only works with cascade direction up.
     public limit_to_screen = false;
+    public zoom_on_drag = false;
 
     public background_color = '#000';
 

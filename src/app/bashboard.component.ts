@@ -11,11 +11,10 @@ import { KlokModule } from './Modules/Klok/KlokModule';
 })
 export class BashBoardComponent implements OnInit {
   public visible = false;
-
   public modules: BashBoardModule[];
   public gridConfig: GridConfig;
 
-  constructor(private storage: LocalStorageService) {};
+  constructor(private storage: LocalStorageService) { };
 
   ngOnInit(): void {
     this.modules = this.getModules();
@@ -24,7 +23,7 @@ export class BashBoardComponent implements OnInit {
     setTimeout(() => this.visible = true, 1);
   }
 
-  public addModule(module: BashBoardModule) {
+  public addModule(module: BashBoardModule): void {
     module = new OVModule();
 
     this.modules.push(module);
@@ -34,25 +33,29 @@ export class BashBoardComponent implements OnInit {
     }
   }
 
-  public removeModule(module: BashBoardModule) {
+  public removeModule(module: BashBoardModule): void {
     this.modules = this.modules.filter(m => m !== module);
   }
 
-  public openSettings() {
+  public openSettings(): void {
   }
 
-  public setStyleSettings() {
+  public setStyleSettings(): void {
     let bodyElement = document.querySelector('body');
     bodyElement.style.setProperty(StyleSettingNames.BACKGROUNDCOLOR, this.gridConfig.background_color);
     bodyElement.style.setProperty(StyleSettingNames.BORDERWIDTH, this.gridConfig.border_width + 'px');
   }
 
-  public saveLayout() {
+  public saveLayout(): void {
     this.storage.store(StorageNames.MODULES, this.modules);
   }
 
+  public onContextMenu(event: Event): void {
+    event.preventDefault();
+  }
+
   private getModules(): BashBoardModule[] {
-    let modules =  this.storage.retrieve(StorageNames.MODULES);
+    let modules = this.storage.retrieve(StorageNames.MODULES);
     return modules ? modules : this.getDefaultModuleLayout();
   }
 
