@@ -1,4 +1,5 @@
 import { NgGridItemConfig } from 'angular2-grid';
+import { Setting } from '../../Settings/Setting';
 
 export abstract class BashBoardModule implements NgGridItemConfig {
     public title: string;
@@ -12,6 +13,7 @@ export abstract class BashBoardModule implements NgGridItemConfig {
     public backgroundColor: string;
     public refreshRate: number; // seconds, 0 for static content
     public needsSetup = false; // Shows settings when added
+    public settings: Setting[];
 
     public showSettings?(): void;
 }

@@ -3,8 +3,10 @@
     <h2 *ngIf='module.title' [innerHtml]='module.title'></h2>
     <h3 *ngIf='module.subTitle' [innerHtml]='module.subTitle'></h3>
 
-    <button class='module-settings btn btn-default'
-            (click)='module.showSettings()'>
-        <span class='glyphicon glyphicon-cog'></span>
+    <button class='module-settings btn btn-default fa fa-cog'
+            data-toggle="modal" data-target="#exampleModal">
     </button>
+    <module-settings    [module]='module'
+                        [settings]='module.settings'>
+    </module-settings>
 </div>

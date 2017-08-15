@@ -6,7 +6,7 @@ import { NgGridModule } from 'angular2-grid';
 
 import { BashBoardComponent }  from './bashboard.component';
 import { BashBoardModuleComponent } from './Modules/bashboard-module.component';
-import { ContextMenuComponent } from './ContextMenu/contextmenu.component';
+import { ModuleSettingsComponent } from './Settings/modulesettings.component';
 
 @NgModule({
   imports:      [
@@ -15,7 +15,7 @@ import { ContextMenuComponent } from './ContextMenu/contextmenu.component';
     // ContextMenuModule,
     NgGridModule
   ],
-  declarations: [ BashBoardComponent, BashBoardModuleComponent, ContextMenuComponent ],
+  declarations: [ BashBoardComponent, BashBoardModuleComponent, ModuleSettingsComponent ],
   bootstrap:    [ BashBoardComponent ]
 })
 export class BashBoardModule { }
