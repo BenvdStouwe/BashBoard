@@ -42,7 +42,7 @@ export class Setting {
 export enum InputType {
     string = 'text',
     password = 'password',
-    date = 'date',
+    date = 'datetime-local',
     color = 'color',
     boolean = 'checkbox',
     number = 'number'

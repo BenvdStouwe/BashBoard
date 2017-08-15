@@ -13,4 +13,16 @@ export class ModuleSettingsComponent implements OnInit {
 
     ngOnInit() {
     }
+
+    public valueIsDate(inputType: InputType): boolean {
+        return inputType === InputType.date;
+    }
+
+    public valueIsColor(inputType: InputType): boolean {
+        return inputType === InputType.color;
+    }
+
+    public setDateToNow(value: Date) {
+        value = new Date();
+    }
 }

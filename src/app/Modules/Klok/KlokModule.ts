@@ -8,7 +8,7 @@ export class KlokModule extends BashBoardModule {
     public textColor = '';
     public refreshRate = 1;
 
-    // private time: Date = new Date();
+    private time: Date = new Date();
 
     constructor() {
         super();

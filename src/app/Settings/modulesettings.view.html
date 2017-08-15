@@ -17,7 +17,14 @@
                                     [innerHTML]='setting.name'>
                         </button>
                     </span>
-                    <input class='form-control' [type]='setting.inputType' [value]='setting.value' />
+                    <input [class.form-control]='!valueIsColor(setting.inputType)' [type]='setting.inputType' [value]='setting.value' />
+                    <span *ngIf='valueIsDate(setting.inputType)' class='input-group-btn'>
+                        <button     class='btn btn-secondary'
+                                    type='button'
+                                    (click)='setDateToNow(setting.value)'>
+                            Nu
+                        </button>
+                    </span>
                 </div>
             </div>
         </div>
