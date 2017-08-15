@@ -34,7 +34,7 @@ export class OVModule extends BashBoardModule {
     }
 
     public showSettings(): void {
-        console.log('Settings');
+        this.settings = this.getSettings();
     }
 
     private getSettings(): Setting[] {
