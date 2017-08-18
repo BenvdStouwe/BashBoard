@@ -8,7 +8,10 @@
     <div id="menu">
         <button (click)='addModule()' class='btn btn-default fa fa-puzzle-piece'>
         </button>
-        <button (click)='openSettings()' class='btn btn-default fa fa-cogs'>
+        <button class='btn btn-default fa fa-cogs'
+            data-toggle="modal" data-target="#bashboardSettings">
         </button>
     </div>
+    <bashboard-settings [gridConfig]='gridConfig'>
+    </bashboard-settings>
 </div>

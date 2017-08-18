@@ -7,6 +7,7 @@ import { NgGridModule } from 'angular2-grid';
 import { BashBoardComponent } from './bashboard.component';
 import { BashBoardModuleComponent } from './Modules/bashboard-module.component';
 import { ModuleSettingsComponent } from './Settings/modulesettings.component';
+import { BashboardSettingsComponent } from './Settings/bashboardsettings.component';
 
 @NgModule({
   imports: [
@@ -15,7 +16,7 @@ import { ModuleSettingsComponent } from './Settings/modulesettings.component';
     Ng2Webstorage,
     NgGridModule
   ],
-  declarations: [BashBoardComponent, BashBoardModuleComponent, ModuleSettingsComponent],
+  declarations: [BashBoardComponent, BashboardSettingsComponent, BashBoardModuleComponent, ModuleSettingsComponent],
   bootstrap: [BashBoardComponent]
 })
 export class BashBoardModule { }

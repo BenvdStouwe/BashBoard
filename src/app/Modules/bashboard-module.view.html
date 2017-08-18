@@ -4,7 +4,7 @@
     <h3 *ngIf='module.subTitle' [innerHtml]='module.subTitle'></h3>
 
     <button class='module-settings btn btn-default fa fa-cog'
-            data-toggle="modal" data-target="#exampleModal">
+            data-toggle="modal" [attr.data-target]="'#' + module.payload + 'Settings'">
     </button>
     <module-settings    [module]='module'
                         [settings]='module.settings'>

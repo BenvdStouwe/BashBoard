@@ -1,4 +1,4 @@
-import { BashBoardModule } from '../Model/BashBoardModule';
+import { BashBoardModule } from '../../Model/BashBoardModule';
 import { Setting } from '../../Settings/Setting';
 
 export class KlokModule extends BashBoardModule {

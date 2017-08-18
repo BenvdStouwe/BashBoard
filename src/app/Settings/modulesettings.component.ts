@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { BashBoardModule } from '../Modules/Model/BashBoardModule';
+import { BashBoardModule } from '../Model/BashBoardModule';
 import { Setting, InputType } from './Setting';
 
 @Component({

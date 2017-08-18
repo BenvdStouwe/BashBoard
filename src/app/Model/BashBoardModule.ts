@@ -1,7 +1,9 @@
 import { NgGridItemConfig } from 'angular2-grid';
-import { Setting } from '../../Settings/Setting';
+import { Setting } from '../Settings/Setting';
+import { Guid } from './Utilities';
 
 export abstract class BashBoardModule implements NgGridItemConfig {
+    public payload: Guid;
     public title: string;
     public col: number;
     public row: number;
@@ -14,6 +16,10 @@ export abstract class BashBoardModule implements NgGridItemConfig {
     public refreshRate: number; // seconds, 0 for static content
     public needsSetup = false; // Shows settings when added
     public settings: Setting[];
+
+    constructor() {
+        this.payload = Guid.newGuid();
+    }
 
     public showSettings?(): void;
 }

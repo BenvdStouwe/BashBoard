@@ -1,8 +1,8 @@
 body {
   --background-color: #000;
   --border-width: 1px;
-  /* background-color: #000; /* Thanks IE 
-  background-color: var(--background-color); */
+  background-color: #000; /* Thanks IE */
+  background-color: var(--background-color);
 }
 
 #menu {
@@ -27,7 +27,7 @@ body {
 
 .grid-item.moving {
   z-index: 999;
-  opacity: 0.9 !important;
+  opacity: 0.8 !important;
   outline: var(--border-width) solid var(--background-color);
 }
 

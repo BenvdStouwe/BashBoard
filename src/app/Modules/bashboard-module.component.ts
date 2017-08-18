@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { BashBoardModule } from './Model/BashBoardModule';
+import { BashBoardModule } from '../Model/BashBoardModule';
 
 @Component({
     selector: 'bashboard-module',

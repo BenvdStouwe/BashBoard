@@ -1,4 +1,4 @@
-import { BashBoardModule } from '../Model/BashBoardModule';
+import { BashBoardModule } from '../../Model/BashBoardModule';
 import { OVMelding } from './OVMelding';
 import { Setting } from '../../Settings/Setting';
 

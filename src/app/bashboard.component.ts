@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { BashBoardModule } from './Modules/Model/BashBoardModule';
+import { BashBoardModule } from './Model/BashBoardModule';
 import { OVModule } from './Modules/OV/OVModule';
 import { LocalStorageService } from 'ngx-webstorage';
-import { GridConfig } from './Modules/Model/GridConfig';
+import { GridConfig } from './Model/GridConfig';
 import { KlokModule } from './Modules/Klok/KlokModule';
+import { Guid } from './Model/Utilities';
 
 @Component({
   selector: 'bashboard',
@@ -26,6 +27,10 @@ export class BashBoardComponent implements OnInit {
   public addModule(module: BashBoardModule): void {
     module = new OVModule();
 
+    while (this.modules.some(m => m.payload === module.payload)) {
+      module.payload = Guid.newGuid();
+    }
+
     this.modules.push(module);
 
     if (module.needsSetup) {
@@ -35,9 +40,6 @@ export class BashBoardComponent implements OnInit {
 
   public removeModule(module: BashBoardModule): void {
     this.modules = this.modules.filter(m => m !== module);
-  }
-
-  public openSettings(): void {
   }
 
   public setStyleSettings(): void {
