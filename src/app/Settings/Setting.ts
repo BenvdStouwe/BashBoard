@@ -17,33 +17,33 @@ export class Setting {
             case 'string':
                 let hexColorRegex = new RegExp('^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$');
                 if (this.name.toLowerCase().indexOf('password') >= 0) {
-                    return InputType.password;
+                    return InputType.PASSWORD;
                 } else if (hexColorRegex.test(this.value)) {
-                    return InputType.color;
+                    return InputType.COLOR;
                 } else {
-                    return InputType.string;
+                    return InputType.STRING;
                 }
             case 'number':
-                return InputType.number;
+                return InputType.NUMBER;
             case 'boolean':
-                return InputType.boolean;
+                return InputType.BOOLEAN;
             case 'object':
                 if (this.value instanceof Date) {
-                    return InputType.date;
+                    return InputType.DATE;
                 } else {
-                    return InputType.string;
+                    return InputType.STRING;
                 }
             default:
-                return InputType.string;
+                return InputType.STRING;
         }
     }
 }
 
 export enum InputType {
-    string = 'text',
-    password = 'password',
-    date = 'datetime-local',
-    color = 'color',
-    boolean = 'checkbox',
-    number = 'number'
+    STRING = 'text',
+    PASSWORD = 'password',
+    DATE = 'datetime-local',
+    COLOR = 'color',
+    BOOLEAN = 'checkbox',
+    NUMBER = 'number'
 }

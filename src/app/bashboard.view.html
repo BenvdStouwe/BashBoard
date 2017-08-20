@@ -1,8 +1,9 @@
 <div    [class.showBoard]='visible' class='step'
         [ngGrid]='gridConfig' 
         (onItemChange)='saveLayout()'>
-    <bashboard-module *ngFor='let module of modules' 
-        [module]='module'>
+    <bashboard-module   *ngFor='let module of modules' 
+                        [module]='module'
+                        (moduleChanged)='saveLayout()'>
     </bashboard-module>
     <div id="menu">
         <button (click)='addModule()' class='btn btn-default fa fa-puzzle-piece'>

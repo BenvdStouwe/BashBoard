@@ -1,4 +1,5 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Setting } from '../Settings/Setting';
+import { Component, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { BashBoardModule } from '../Model/BashBoardModule';
 import { ModuleSettingsComponent } from '../Settings/modulesettings.component';
 
@@ -8,10 +9,10 @@ import { ModuleSettingsComponent } from '../Settings/modulesettings.component';
 })
 export class BashBoardModuleComponent {
     @Input() public module: BashBoardModule;
-    @ViewChild(ModuleSettingsComponent) private moduleSettingsComponent: ModuleSettingsComponent;
+    @Output() public moduleChanged: EventEmitter<boolean> = new EventEmitter();
 
-    public updateSettings() {
-        console.log('Updating');
-        this.module.procesSettings(this.moduleSettingsComponent.settings);
+    public updateSettings(settings: Setting[]) {
+        this.module.procesSettings(settings);
+        this.moduleChanged.emit(true);
     }
 }

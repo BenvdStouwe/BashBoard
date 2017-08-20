@@ -4,7 +4,6 @@ import { OVModule } from './Modules/OV/OVModule';
 import { LocalStorageService } from 'ngx-webstorage';
 import { GridConfig } from './Model/GridConfig';
 import { Modules } from './Modules/Modules';
-import { Guid } from './Model/Utilities';
 
 @Component({
   selector: 'bashboard',
@@ -28,7 +27,7 @@ export class BashBoardComponent implements OnInit {
     module = new OVModule();
 
     while (this.modules.some(m => m.payload === module.payload)) {
-      module.payload = Guid.newGuid();
+      module.generateNewGuid();
     }
 
     this.modules.push(module);
@@ -76,12 +75,12 @@ export class BashBoardComponent implements OnInit {
   }
 }
 
-export class StorageNames {
-  public static readonly MODULES: string = 'BashBoardModules';
-  public static readonly GRIDCONFIG: string = 'GridConfig';
+enum StorageNames {
+  MODULES = 'BashBoardModules',
+  GRIDCONFIG = 'GridConfig'
 }
 
-export class StyleSettingNames {
-  public static readonly BACKGROUNDCOLOR: string = '--background-color';
-  public static readonly BORDERWIDTH: string = '--border-width';
+enum StyleSettingNames {
+  BACKGROUNDCOLOR = '--background-color',
+  BORDERWIDTH = '--border-width'
 }

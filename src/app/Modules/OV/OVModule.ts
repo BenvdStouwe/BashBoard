@@ -3,9 +3,6 @@ import { OVMelding } from './OVMelding';
 import { Setting } from '../../Settings/Setting';
 
 export class OVModule extends BashBoardModule {
-    public title = 'OV Info';
-    public backgroundColor = '#ffb310';
-    public textColor = '';
     public refreshRate: 60;
 
     public station: string;
@@ -16,6 +13,10 @@ export class OVModule extends BashBoardModule {
         if (module) {
             this.station = module.station;
             this.warnings = module.warnings;
+        } else {
+            this.title = 'OV Info';
+            this.backgroundColor = '#ffb310';
+            this.textColor = '';
         }
     }
 
@@ -36,9 +37,24 @@ export class OVModule extends BashBoardModule {
     public getSettings(): Setting[] {
         let settings = [
             new Setting(SettingNames.TITLE, this.title),
-            new Setting(SettingNames.BACKGROUNDCOLOR, this.backgroundColor)
+            new Setting(SettingNames.BACKGROUNDCOLOR, this.backgroundColor),
+            new Setting(OVSettingNames.STATION, this.station)
         ];
 
         return settings;
     }
+
+    public procesSettings(settings: Setting[]) {
+        super.procesSettings(settings);
+        for (let setting of settings) {
+            switch (setting.name) {
+                case OVSettingNames.STATION:
+                    this.station = setting.value;
+            }
+        }
+    }
+}
+
+enum OVSettingNames {
+    STATION = 'Station'
 }

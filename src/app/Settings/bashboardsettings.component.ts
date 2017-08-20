@@ -8,6 +8,7 @@ import { GridConfig } from '../Model/GridConfig';
 
 export class BashboardSettingsComponent implements OnInit {
     @Input() gridConfig: GridConfig;
+
     constructor() { }
 
     ngOnInit() { }

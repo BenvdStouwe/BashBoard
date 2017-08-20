@@ -9,27 +9,28 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 
 export class ModuleSettingsComponent {
-    @Input() public module: BashBoardModule;
     public settings: Setting[];
-    @Output() public settingsClosed: EventEmitter<boolean> = new EventEmitter();
 
-    constructor(private modalService: NgbModal) {}
+    @Input() public module: BashBoardModule;
+
+    @Output() public settingsClosed: EventEmitter<Setting[]> = new EventEmitter();
+
+    constructor(private modalService: NgbModal) { }
 
     public open(settings: String) {
         this.settings = this.module.getSettings();
         this.modalService.open(settings).result.then((result) => {
-            this.settingsClosed.emit(true);
+            this.settingsClosed.emit(this.settings);
         }, (reason) => {
-            this.settingsClosed.emit(true);
         });
     }
 
     public valueIsDate(inputType: InputType): boolean {
-        return inputType === InputType.date;
+        return inputType === InputType.DATE;
     }
 
     public valueIsColor(inputType: InputType): boolean {
-        return inputType === InputType.color;
+        return inputType === InputType.COLOR;
     }
 
     public setDateToNow(value: Date) {

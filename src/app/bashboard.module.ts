@@ -8,10 +8,12 @@ import { BashBoardComponent } from './bashboard.component';
 import { BashBoardModuleComponent } from './Modules/bashboard-module.component';
 import { ModuleSettingsComponent } from './Settings/modulesettings.component';
 import { BashboardSettingsComponent } from './Settings/bashboardsettings.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     BrowserModule,
+    FormsModule,
     NgbModule.forRoot(),
     Ng2Webstorage,
     NgGridModule
