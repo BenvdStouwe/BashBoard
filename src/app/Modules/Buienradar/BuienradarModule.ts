@@ -11,6 +11,10 @@ export class BuienradarModule extends BashBoardModule {
         }
     }
 
+    public updateContent() {
+
+    }
+
     public getSettings(): Setting[] {
         let settings = [
             new Setting(SettingNames.TITLE, this.title),

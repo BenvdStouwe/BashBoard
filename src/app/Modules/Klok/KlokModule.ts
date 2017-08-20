@@ -3,7 +3,7 @@ import { Setting } from '../../Settings/Setting';
 
 export class KlokModule extends BashBoardModule {
     public defaultHeight = 1;
-    public refreshRate = 1;
+    public refreshRate = 1000;
 
     private time: Date = new Date();
 
@@ -14,6 +14,13 @@ export class KlokModule extends BashBoardModule {
             this.backgroundColor = '#1d64d6';
             this.textColor = '';
         }
+        this.updateContent();
+        setInterval(() => this.updateContent(), this.refreshRate);
+    }
+
+    public updateContent() {
+        this.time = new Date();
+        console.log(this.time);
     }
 
     public getSettings(): Setting[] {

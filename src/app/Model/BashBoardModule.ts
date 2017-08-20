@@ -15,7 +15,7 @@ export abstract class BashBoardModule implements NgGridItemConfig {
     public defaultHeight = 1; // default for sizey
     public backgroundColor = '#333';
     public textColor: string;
-    public refreshRate: number; // seconds, 0 for static content
+    public refreshRate: number; // milliseconds, 0 for static content
     public needsSetup = false; // Shows settings when added
 
     constructor(module?: BashBoardModule) {
@@ -42,6 +42,8 @@ export abstract class BashBoardModule implements NgGridItemConfig {
     public generateNewGuid() {
         this.payload = Guid.newGuid();
     }
+
+    abstract updateContent(): void;
 
     abstract getSettings(): Setting[];
 

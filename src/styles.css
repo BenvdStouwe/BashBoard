@@ -34,7 +34,7 @@ body {
 .module-settings {
   right: 1px;
   bottom: 1px;
-  position: absolute;
+  position: relative;
   display: none;
 }
 
