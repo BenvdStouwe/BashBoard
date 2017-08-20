@@ -1,4 +1,4 @@
-import { BashBoardModule } from '../../Model/BashBoardModule';
+import { BashBoardModule, SettingNames } from '../../Model/BashBoardModule';
 import { Setting } from '../../Settings/Setting';
 
 export class KlokModule extends BashBoardModule {
@@ -10,11 +10,11 @@ export class KlokModule extends BashBoardModule {
 
     private time: Date = new Date();
 
-    constructor() {
-        super();
-        this.settings = [
-            new Setting('Titel', this.title),
-            new Setting('Achtergrondkleur', this.backgroundColor)
+    public getSettings(): Setting[] {
+        let settings = [
+            new Setting(SettingNames.TITLE, this.title),
+            new Setting(SettingNames.BACKGROUNDCOLOR, this.backgroundColor)
         ];
+        return settings;
     }
 }

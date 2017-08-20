@@ -1,4 +1,4 @@
-import { BashBoardModule } from '../../Model/BashBoardModule';
+import { BashBoardModule, SettingNames } from '../../Model/BashBoardModule';
 import { OVMelding } from './OVMelding';
 import { Setting } from '../../Settings/Setting';
 
@@ -11,12 +11,12 @@ export class OVModule extends BashBoardModule {
     public station: string;
     public warnings: OVMelding[];
 
-    // private NSApiUserName: string;
-    // private NSApiPassWord: string;
-
-    constructor() {
-        super();
-        this.settings = this.getSettings();
+    constructor(module?: OVModule) {
+        super(module);
+        if (module) {
+            this.station = module.station;
+            this.warnings = module.warnings;
+        }
     }
 
     public retrieveWarnings(): void {
@@ -33,14 +33,10 @@ export class OVModule extends BashBoardModule {
         return new Array<OVMelding>();
     }
 
-    public showSettings(): void {
-        this.settings = this.getSettings();
-    }
-
-    private getSettings(): Setting[] {
+    public getSettings(): Setting[] {
         let settings = [
-            new Setting('Titel', this.title),
-            new Setting('Achtergrondkleur', this.backgroundColor)
+            new Setting(SettingNames.TITLE, this.title),
+            new Setting(SettingNames.BACKGROUNDCOLOR, this.backgroundColor)
         ];
 
         return settings;

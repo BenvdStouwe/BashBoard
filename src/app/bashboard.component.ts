@@ -3,7 +3,7 @@ import { BashBoardModule } from './Model/BashBoardModule';
 import { OVModule } from './Modules/OV/OVModule';
 import { LocalStorageService } from 'ngx-webstorage';
 import { GridConfig } from './Model/GridConfig';
-import { KlokModule } from './Modules/Klok/KlokModule';
+import { Modules } from './Modules/Modules';
 import { Guid } from './Model/Utilities';
 
 @Component({
@@ -32,10 +32,6 @@ export class BashBoardComponent implements OnInit {
     }
 
     this.modules.push(module);
-
-    if (module.needsSetup) {
-      module.showSettings();
-    }
   }
 
   public removeModule(module: BashBoardModule): void {
@@ -52,18 +48,21 @@ export class BashBoardComponent implements OnInit {
     this.storage.store(StorageNames.MODULES, this.modules);
   }
 
-  public onContextMenu(event: Event): void {
-    event.preventDefault();
-  }
-
   private getModules(): BashBoardModule[] {
-    let modules = this.storage.retrieve(StorageNames.MODULES);
-    return modules ? modules : this.getDefaultModuleLayout();
+    let modulesFromStorage = this.storage.retrieve(StorageNames.MODULES) as BashBoardModule[];
+    if (!modulesFromStorage) { modulesFromStorage = [] };
+    let modules: BashBoardModule[] = [];
+
+    modulesFromStorage.forEach(element => {
+      modules.push(new Modules[element.className](element) as BashBoardModule);
+    });
+
+    return modules.length > 0 ? modules : this.getDefaultModuleLayout();
   }
 
   private getDefaultModuleLayout(): BashBoardModule[] {
     let modules: BashBoardModule[] = [];
-    modules.push(new KlokModule());
+    modules.push(new Modules.KlokModule());
     return modules;
   }
 
