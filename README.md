@@ -1,0 +1,2 @@
+# BashBoard
+Configurable modular dashboard
