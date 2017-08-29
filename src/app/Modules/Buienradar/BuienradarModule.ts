@@ -2,6 +2,7 @@ import { BashBoardModule, SettingNames } from '../../Model/BashBoardModule';
 import { Setting } from '../../Settings/Setting';
 
 export class BuienradarModule extends BashBoardModule {
+    public static readonly friendlyName = 'Buienradar';
     public title = 'Buienradar';
 
     constructor(module?: BashBoardModule) {

@@ -1,8 +1,9 @@
 import { BashBoardModule, SettingNames } from '../../Model/BashBoardModule';
 import { OVMelding } from './OVMelding';
-import { Setting } from '../../Settings/Setting';
+import { Setting, InputType } from '../../Settings/Setting';
 
 export class OVModule extends BashBoardModule {
+    public static readonly friendlyName = 'Reisinformatie';
     public refreshRate = 120000;
     public needsSetup = true;
 
@@ -24,13 +25,15 @@ export class OVModule extends BashBoardModule {
             this.showWarnings = false;
         }
         this.updateContent();
-        setInterval(() => this.updateContent(), this.refreshRate);
     }
 
     public updateContent(): void {
         let warnings = this.getNSTrainTimes();
         console.log('NS meldingen ophalen');
         this.warnings = warnings;
+        setTimeout(() =>
+            this.updateContent()
+        , this.refreshRate);
     }
 
     private getNSWarnings(): OVMelding[] {
@@ -49,9 +52,10 @@ export class OVModule extends BashBoardModule {
         let settings = [
             new Setting(SettingNames.TITLE, this.title),
             new Setting(SettingNames.BACKGROUNDCOLOR, this.backgroundColor),
+            new Setting(SettingNames.TEXTCOLOR, this.textColor),
             new Setting(OVSettingNames.STATION, this.station),
-            new Setting(OVSettingNames.TRAINTIMES, this.showTimes),
-            new Setting(OVSettingNames.WARNINGS, this.showWarnings)
+            new Setting(OVSettingNames.TRAINTIMES, this.showTimes, InputType.BOOLEAN),
+            new Setting(OVSettingNames.WARNINGS, this.showWarnings, InputType.BOOLEAN)
         ];
 
         return settings;

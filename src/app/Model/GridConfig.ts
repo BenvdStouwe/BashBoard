@@ -1,6 +1,7 @@
 import { NgGridConfig as INgGridConfig } from 'angular2-grid/main';
 
 export class GridConfig implements INgGridConfig  {
+    public readonly version: number;
     //  The size of the margins of each item. Supports up to four values in the same way as CSS margins. Can be updated using setMargins()
     public margins: number[] = [1];
     //  Whether the items can be dragged. Can be updated using enableDrag()/disableDrag()

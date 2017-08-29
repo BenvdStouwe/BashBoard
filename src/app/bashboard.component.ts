@@ -53,7 +53,7 @@ export class BashBoardComponent implements OnInit {
     let modules: BashBoardModule[] = [];
 
     modulesFromStorage.forEach(element => {
-      modules.push(new Modules[element.className](element) as BashBoardModule);
+      modules.push(new Modules[element.className](element));
     });
 
     return modules.length > 0 ? modules : this.getDefaultModuleLayout();
@@ -64,6 +64,10 @@ export class BashBoardComponent implements OnInit {
     modules.push(new Modules.KlokModule());
     return modules;
   }
+
+  // private saveGridConfig(): void {
+  //   this.storage.store(StorageNames.GRIDCONFIG, this.gridConfig);
+  // }
 
   private getGridConfig(): GridConfig {
     let gridConfig = this.storage.retrieve(StorageNames.GRIDCONFIG);

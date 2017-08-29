@@ -1,21 +1,23 @@
 import { NgGridItemConfig } from 'angular2-grid';
 import { Setting } from '../Settings/Setting';
-import { Guid } from './Utilities';
+import { Utilities } from './Utilities';
 
 export abstract class BashBoardModule implements NgGridItemConfig {
-    public payload: Guid;
+    public static readonly friendlyName: string;
+    public refreshRate = 0; // milliseconds, 0 for static content
+
+    public payload: Utilities.Guid;
     public className: string; // Needed so objects from LocalStorage can be cast to correct class
-    public title: string;
+    public title?: string;
+    public subTitle?: string;
     public col: number;
     public row: number;
     public sizex: number; // # of columns wide
     public sizey: number; // # of rows high
-    public subTitle?: string;
     public defaultWidth = 1; // default for sizex
     public defaultHeight = 1; // default for sizey
     public backgroundColor = '#333';
     public textColor: string;
-    public refreshRate: number; // milliseconds, 0 for static content
     public needsSetup = false; // Shows settings when added
 
     constructor(module?: BashBoardModule) {
@@ -40,7 +42,7 @@ export abstract class BashBoardModule implements NgGridItemConfig {
     }
 
     public generateNewGuid() {
-        this.payload = Guid.newGuid();
+        this.payload = Utilities.Guid.newGuid();
     }
 
     abstract updateContent(): void;
@@ -48,11 +50,15 @@ export abstract class BashBoardModule implements NgGridItemConfig {
     abstract getSettings(): Setting[];
 
     public procesSettings(settings: Setting[]) {
-        // Override in subclass to proces module specific attirbutes
+        // Override in subclass to proces module specific attributes
+        // Do call this one with super.procesSettings in your implementation
         for (let setting of settings) {
             switch (setting.name) {
                 case SettingNames.TITLE:
                     this.title = setting.value;
+                    break;
+                case SettingNames.SUBTITLE:
+                    this.subTitle = setting.value;
                     break;
                 case SettingNames.BACKGROUNDCOLOR:
                     this.backgroundColor = setting.value;
@@ -67,6 +73,7 @@ export abstract class BashBoardModule implements NgGridItemConfig {
 
 export enum SettingNames {
     TITLE = 'Titel',
+    SUBTITLE = 'Ondertitel',
     BACKGROUNDCOLOR = 'Achtergrondkleur',
     TEXTCOLOR = 'Tekstkleur'
 }
