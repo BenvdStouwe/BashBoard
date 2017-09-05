@@ -50,14 +50,16 @@ export abstract class BashBoardModule implements NgGridItemConfig {
         this.payload = Guid.newGuid();
     }
 
-    public pauzeTimer(): void {
-        console.log('pausing timer');
-        this.timer.pause();
+    public pauseTimer(): void {
+        if (this.timer) {
+            this.timer.pause();
+        }
     }
 
     public resumeTimer(): void {
-        console.log('resuming timer');
-        this.timer.resume();
+        if (this.timer) {
+            this.timer.resume();
+        }
     }
 
     public procesSettings(settings: Setting[]) {

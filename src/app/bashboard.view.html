@@ -3,8 +3,6 @@
         (onItemChange)='saveLayout()'>
     <bashboard-module   *ngFor='let module of modules' 
                         [module]='module'
-                        (onChangeStart)='module.pauseTimer()'
-                        (onChangeStop)='module.resumeTimer()'
                         (moduleChanged)='saveLayout()'>
     </bashboard-module>
     <div id="menu">

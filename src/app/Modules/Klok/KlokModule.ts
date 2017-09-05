@@ -29,11 +29,10 @@ export class KlokModule extends BashBoardModule {
     }
 
     public getSettings(): Setting[] {
-        let settings = [
+        return [
             new Setting(SettingNames.TITLE, this.title),
             new Setting(SettingNames.BACKGROUNDCOLOR, this.backgroundColor),
             new Setting(SettingNames.TEXTCOLOR, this.textColor)
         ];
-        return settings;
     }
 }
