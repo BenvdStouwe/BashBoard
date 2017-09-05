@@ -1,12 +1,12 @@
 import { NgGridItemConfig } from 'angular2-grid';
 import { Setting } from '../Settings/Setting';
-import { Utilities } from './Utilities';
+import { Guid, Timer } from './Utilities';
 
 export abstract class BashBoardModule implements NgGridItemConfig {
     public static readonly friendlyName: string;
     public refreshRate = 0; // milliseconds, 0 for static content
 
-    public payload: Utilities.Guid;
+    public payload: Guid;
     public className: string; // Needed so objects from LocalStorage can be cast to correct class
     public title?: string;
     public subTitle?: string;
@@ -19,6 +19,7 @@ export abstract class BashBoardModule implements NgGridItemConfig {
     public backgroundColor = '#333';
     public textColor: string;
     public needsSetup = false; // Shows settings when added
+    private timer: Timer;
 
     constructor(module?: BashBoardModule) {
         // When modules are loaded from the LocalStorage, they are just objects and not BashBoardModules.
@@ -41,13 +42,23 @@ export abstract class BashBoardModule implements NgGridItemConfig {
         }
     }
 
-    public generateNewGuid() {
-        this.payload = Utilities.Guid.newGuid();
-    }
-
     abstract updateContent(): void;
 
     abstract getSettings(): Setting[];
+
+    public generateNewGuid() {
+        this.payload = Guid.newGuid();
+    }
+
+    public pauzeTimer(): void {
+        console.log('pausing timer');
+        this.timer.pause();
+    }
+
+    public resumeTimer(): void {
+        console.log('resuming timer');
+        this.timer.resume();
+    }
 
     public procesSettings(settings: Setting[]) {
         // Override in subclass to proces module specific attributes

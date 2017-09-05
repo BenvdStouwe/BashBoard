@@ -1,7 +1,8 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { BashBoardModule } from '../Model/BashBoardModule';
-import { Setting, InputType } from './Setting';
+import { Setting } from './Setting';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { InputType } from '../Model/Utilities';
 
 @Component({
     selector: 'module-settings',

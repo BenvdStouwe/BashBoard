@@ -1,5 +1,6 @@
 import { BashBoardModule, SettingNames } from '../../Model/BashBoardModule';
 import { Setting } from '../../Settings/Setting';
+import { Timer } from '../../Model/Utilities';
 
 export class KlokModule extends BashBoardModule {
     public static readonly friendlyName = 'Klok';
@@ -13,16 +14,18 @@ export class KlokModule extends BashBoardModule {
         if (!module) {
             this.title = 'Klok'
             this.backgroundColor = '#1d64d6';
-            this.textColor = '';
+            this.textColor = '#fff';
         }
         this.updateContent();
     }
 
     public updateContent() {
         this.time = new Date();
-        setTimeout(() =>
-            this.updateContent()
-        , this.refreshRate);
+        console.log(this.time);
+        this.timer = new Timer(
+            () => this.updateContent(),
+            this.refreshRate
+        );
     }
 
     public getSettings(): Setting[] {

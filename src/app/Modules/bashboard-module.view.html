@@ -1,5 +1,6 @@
 <div    [ngGridItem]='module' 
-        [style.background-color]='module.backgroundColor'>
+        [style.background-color]='module.backgroundColor'
+        [style.color]='module.textColor'>
     <h2 *ngIf='module.title' [innerHtml]='module.title'></h2>
     <h3 *ngIf='module.subTitle' [innerHtml]='module.subTitle'></h3>
 

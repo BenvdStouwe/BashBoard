@@ -1,6 +1,7 @@
 import { BashBoardModule, SettingNames } from '../../Model/BashBoardModule';
 import { OVMelding } from './OVMelding';
-import { Setting, InputType } from '../../Settings/Setting';
+import { Setting } from '../../Settings/Setting';
+import { InputType } from '../../Model/Utilities';
 
 export class OVModule extends BashBoardModule {
     public static readonly friendlyName = 'Reisinformatie';
@@ -20,11 +21,11 @@ export class OVModule extends BashBoardModule {
         } else {
             this.title = 'OV Info';
             this.backgroundColor = '#ffb310';
-            this.textColor = '';
+            this.textColor = '#fff';
             this.showTimes = true;
             this.showWarnings = false;
         }
-        this.updateContent();
+        // this.updateContent();
     }
 
     public updateContent(): void {
@@ -49,16 +50,14 @@ export class OVModule extends BashBoardModule {
     }
 
     public getSettings(): Setting[] {
-        let settings = [
+        return [
             new Setting(SettingNames.TITLE, this.title),
             new Setting(SettingNames.BACKGROUNDCOLOR, this.backgroundColor),
-            new Setting(SettingNames.TEXTCOLOR, this.textColor),
+            new Setting(SettingNames.TEXTCOLOR, this.textColor, InputType.COLOR),
             new Setting(OVSettingNames.STATION, this.station),
             new Setting(OVSettingNames.TRAINTIMES, this.showTimes, InputType.BOOLEAN),
             new Setting(OVSettingNames.WARNINGS, this.showWarnings, InputType.BOOLEAN)
         ];
-
-        return settings;
     }
 
     public procesSettings(settings: Setting[]) {
