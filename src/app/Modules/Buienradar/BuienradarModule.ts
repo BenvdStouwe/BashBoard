@@ -12,7 +12,7 @@ export class BuienradarModule extends BashBoardModule {
         }
     }
 
-    public updateContent() {
+    public updateContent(): void {
 
     }
 

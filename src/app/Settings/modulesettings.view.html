@@ -1,4 +1,5 @@
-<button class='module-settings btn btn-default fa fa-refresh' *ngIf='!module.refreshRate' (click)='module.updateContent'>
+<button class='module-settings btn btn-default' *ngIf='!module.refreshRate' (click)='updateModule()'>
+  <span class="fa quick-spin fa-refresh"></span>
 </button>
 <button class='module-settings btn btn-default fa fa-cog' (click)='open(module)'>
 </button>

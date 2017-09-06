@@ -2,16 +2,16 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "chrome",
+            "type": "firefox",
             "request": "launch",
-            "name": "Launch Chrome against localhost",
+            "name": "Launch Firefox Dev against localhost",
             "url": "http://localhost:3000",
             "webRoot": "${workspaceRoot}"
         },
         {
-            "type": "chrome",
+            "type": "firefox",
             "request": "attach",
-            "name": "Attach to Chrome",
+            "name": "Attach to Firefox Dev",
             "port": 9222,
             "webRoot": "${workspaceRoot}"
         }

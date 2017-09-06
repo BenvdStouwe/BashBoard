@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, ElementRef } from '@angular/core';
 import { BashBoardModule } from '../Model/BashBoardModule';
 import { Setting } from './Setting';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -10,20 +10,29 @@ import { InputType } from '../Model/Utilities';
 })
 
 export class ModuleSettingsComponent {
-    public settings: Setting[];
+    private settings: Setting[];
 
-    @Input() public module: BashBoardModule;
-
+    @Input() private module: BashBoardModule;
     @Output() public settingsClosed: EventEmitter<Setting[]> = new EventEmitter();
 
     constructor(private modalService: NgbModal) { }
 
-    public open(settings: String) {
+    ngOnInit(): void {
+        if (this.module.needsSetup) {
+            this.open(this.module);
+        }
+    }
+
+    public open(settings: any) {
         this.settings = this.module.getSettings();
         this.modalService.open(settings).result.then((result) => {
             this.settingsClosed.emit(this.settings);
         }, (reason) => {
         });
+    }
+
+    public updateModule() {
+        this.module.updateContent();
     }
 
     public valueIsDate(inputType: InputType): boolean {

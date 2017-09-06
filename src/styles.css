@@ -43,6 +43,10 @@ body {
 }
 
 /* Loader */
+.quick-spin {
+  animation: fa-spin 1s infinite linear;
+}
+
 .loader {
   width: 50%;
   height: 50%;

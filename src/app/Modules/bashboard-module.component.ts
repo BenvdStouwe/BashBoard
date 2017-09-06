@@ -1,5 +1,5 @@
 import { Setting } from '../Settings/Setting';
-import { Component, Input, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { BashBoardModule } from '../Model/BashBoardModule';
 import { ModuleSettingsComponent } from '../Settings/modulesettings.component';
 
