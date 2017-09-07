@@ -9,45 +9,30 @@ export class Guid {
 }
 
 export class Timer {
-    private readonly timeout: number;
+    private readonly timeout: number; // milliseconds
     private id: number;
     private callback: Function;
-    private remainingTime: number;
-    private startDate: Date;
-    private pauseDate: Date;
+    private start: Date = null;
 
-    constructor(callback: Function, timeout: number) {
+    public constructor(callback: Function, timeout: number) {
         this.callback = callback;
         this.timeout = timeout;
-        this.remainingTime = timeout;
         this.resume();
     }
 
     public resume(): void {
-        this.startDate = new Date();
-        clearTimeout(this.id);
-        if (this.pauseDate) {
-            let elapsedTime = this.startDate.getTime() - this.pauseDate.getTime();
-            this.pauseDate = null;
-            if (elapsedTime > this.remainingTime) {
-                this.callback();
-                return;
-            } else {
-                this.remainingTime -= elapsedTime;
-            }
-        }
-        this.id = setTimeout(this.callback, this.remainingTime);
+        let remainingTime = this.start ? this.timeout - (new Date().getTime() - this.start.getTime()) : this.timeout;
+        this.start = this.start ? this.start : new Date();
+        this.id = setTimeout(this.callback, Math.max(remainingTime, 0));
     }
 
     public pause(): void {
         clearTimeout(this.id);
-        this.remainingTime -= new Date().getTime() - this.startDate.getTime();
-        this.pauseDate = new Date();
     }
 
     public restart(): void {
-        this.pauseDate = null;
-        this.remainingTime = this.timeout;
+        clearTimeout(this.id);
+        this.start = null;
         this.resume();
     }
 }
