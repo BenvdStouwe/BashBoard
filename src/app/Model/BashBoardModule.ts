@@ -1,5 +1,6 @@
 import { NgGridItemConfig } from 'angular2-grid';
 import { Setting } from '../Settings/Setting';
+import { ModuleSettingsComponent } from '../Settings/modulesettings.component'
 import { Guid, Timer, InputType } from './Utilities';
 import { EventEmitter, Input, Component } from '@angular/core';
 
@@ -12,7 +13,6 @@ export abstract class BashBoardModule implements NgGridItemConfig {
 
     public className: string; // Needed so objects from LocalStorage can be cast to correct class
     public title?: string;
-    public subTitle?: string;
     public col: number;
     public row: number;
     public sizex: number; // # of columns wide
@@ -105,11 +105,6 @@ export abstract class BashBoardModule implements NgGridItemConfig {
                         this.title = setting.value;
                     }
                     break;
-                case SettingNames.SUBTITLE:
-                    if (this.subTitle !== setting.value) {
-                        this.subTitle = setting.value;
-                    }
-                    break;
                 case SettingNames.BACKGROUNDCOLOR:
                     if (this.backgroundColor !== setting.value) {
                         this.backgroundColor = setting.value;
@@ -135,7 +130,6 @@ export abstract class BashBoardModule implements NgGridItemConfig {
 
 export enum SettingNames {
     TITLE = 'Titel',
-    SUBTITLE = 'Ondertitel',
     BACKGROUNDCOLOR = 'Achtergrondkleur',
     TEXTCOLOR = 'Tekstkleur'
 }

@@ -1,9 +1,9 @@
-import { KlokModuleComponent as _KlokModule } from './Klok/Klokmodule';
-import { OVModuleComponent as _OVModule } from './OV/OVModule';
-import { BuienradarModuleComponent as _BuienradarModule } from './Buienradar/BuienradarModule';
+import { KlokModuleComponent as _KlokModule } from './klok/klokmodule.component';
+import { OVModuleComponent as _OVModule } from './ov/ovmodule.component';
+import { BuienradarModuleComponent as _BuienradarModule } from './buienradar/buienradarmodule.component';
 
 export namespace Modules {
-    export const KlokModule = _KlokModule;
-    export const OVModule = _OVModule;
-    export const BuienradarModule = _BuienradarModule;
+    export const KlokModuleComponent = _KlokModule;
+    export const OVModuleComponent = _OVModule;
+    export const BuienradarModuleComponent = _BuienradarModule;
 }

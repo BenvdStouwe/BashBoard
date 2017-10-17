@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BashBoardModule } from './Model/BashBoardModule';
-import { OVModuleComponent } from './Modules/OV/OVModule.component';
+import { OVModuleComponent } from './Modules/ov/ovmodule.component';
 import { LocalStorageService } from 'ngx-webstorage';
 import { GridConfig } from './Model/GridConfig';
 import { Modules } from './Modules/Modules';
@@ -61,7 +61,7 @@ export class BashBoardComponent implements OnInit {
 
   private getDefaultModuleLayout(): BashBoardModule[] {
     let modules: BashBoardModule[] = [];
-    modules.push(new Modules.KlokModule());
+    modules.push(new Modules.KlokModuleComponent());
     return modules;
   }
 

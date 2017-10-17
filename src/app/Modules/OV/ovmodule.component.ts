@@ -5,7 +5,7 @@ import { InputType, Timer } from '../../Model/Utilities';
 import { Component } from '@angular/core';
 
 @Component({
-    templateUrl: ''
+    templateUrl: './ovmodule.view.html'
 })
 export class OVModuleComponent extends BashBoardModule {
     public readonly friendlyName = 'Reisinformatie';

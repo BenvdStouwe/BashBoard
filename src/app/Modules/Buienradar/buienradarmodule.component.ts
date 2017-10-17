@@ -17,7 +17,7 @@ export class BuienradarModuleComponent extends BashBoardModule {
     }
 
     public updateContent(): void {
-
+        return;
     }
 
     public setDefaultSettings(): void {
