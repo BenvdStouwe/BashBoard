@@ -2,8 +2,12 @@ import { BashBoardModule, SettingNames } from '../../Model/BashBoardModule';
 import { OVMelding } from './OVMelding';
 import { Setting } from '../../Settings/Setting';
 import { InputType, Timer } from '../../Model/Utilities';
+import { Component } from '@angular/core';
 
-export class OVModule extends BashBoardModule {
+@Component({
+    templateUrl: ''
+})
+export class OVModuleComponent extends BashBoardModule {
     public readonly friendlyName = 'Reisinformatie';
     public readonly refreshRate = 120000;
 
@@ -12,7 +16,7 @@ export class OVModule extends BashBoardModule {
     public showTimes: Boolean;
     public showWarnings: Boolean;
 
-    constructor(module?: OVModule) {
+    constructor(module?: OVModuleComponent) {
         super(module);
         if (module) {
             this.station = module.station;
@@ -57,8 +61,8 @@ export class OVModule extends BashBoardModule {
     }
 
     public procesSettings(settings: Setting[]) {
-        super.procesSettings(settings);
         let updateContent = false;
+        super.procesSettings(settings);
         for (let setting of settings) {
             switch (setting.name) {
                 case OVSettingNames.STATION:

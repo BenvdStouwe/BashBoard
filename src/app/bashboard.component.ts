@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BashBoardModule } from './Model/BashBoardModule';
-import { OVModule } from './Modules/OV/OVModule';
+import { OVModuleComponent } from './Modules/OV/OVModule.component';
 import { LocalStorageService } from 'ngx-webstorage';
 import { GridConfig } from './Model/GridConfig';
 import { Modules } from './Modules/Modules';
@@ -24,7 +24,7 @@ export class BashBoardComponent implements OnInit {
   }
 
   public addModule(module: BashBoardModule): void {
-    module = new OVModule();
+    module = new OVModuleComponent();
 
     while (this.modules.some(m => m.getId() === module.getId())) {
       module.generateNewGuid();

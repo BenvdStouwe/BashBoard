@@ -1,8 +1,12 @@
 import { BashBoardModule, SettingNames } from '../../Model/BashBoardModule';
 import { Setting } from '../../Settings/Setting';
 import { Timer } from '../../Model/Utilities';
+import { Component } from '@angular/core';
 
-export class KlokModule extends BashBoardModule {
+@Component ({
+    templateUrl: './KlokModule.view.html'
+})
+export class KlokModuleComponent extends BashBoardModule {
     public readonly friendlyName = 'Klok';
     public readonly refreshRate = 1000;
     public defaultHeight = 1;
@@ -11,7 +15,7 @@ export class KlokModule extends BashBoardModule {
 
     private time: Date = new Date();
 
-    constructor(module?: KlokModule) {
+    constructor(module?: KlokModuleComponent) {
         super(module);
         if (!module) {
             this.setDefaultSettings();

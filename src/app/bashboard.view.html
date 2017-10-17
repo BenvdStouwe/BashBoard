@@ -1,7 +1,8 @@
 <div    [class.showBoard]='visible' class='step'
         [ngGrid]='gridConfig' 
         (onItemChange)='saveLayout()'>
-    <bashboard-module   *ngFor='let module of modules' 
+    <bashboard-module   *ngFor='let module of modules'
+                        [ngGridItem]='module'
                         [module]='module'
                         (moduleChanged)='saveLayout()'>
     </bashboard-module>

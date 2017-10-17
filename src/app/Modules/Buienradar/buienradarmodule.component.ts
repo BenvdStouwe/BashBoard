@@ -1,7 +1,11 @@
 import { BashBoardModule, SettingNames } from '../../Model/BashBoardModule';
 import { Setting } from '../../Settings/Setting';
+import { Component } from '@angular/core';
 
-export class BuienradarModule extends BashBoardModule {
+@Component ({
+    templateUrl: ''
+})
+export class BuienradarModuleComponent extends BashBoardModule {
     public readonly friendlyName = 'Buienradar';
     public title: string;
 

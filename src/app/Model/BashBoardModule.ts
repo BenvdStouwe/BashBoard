@@ -1,10 +1,12 @@
 import { NgGridItemConfig } from 'angular2-grid';
 import { Setting } from '../Settings/Setting';
 import { Guid, Timer, InputType } from './Utilities';
+import { EventEmitter, Input, Component } from '@angular/core';
 
 export abstract class BashBoardModule implements NgGridItemConfig {
     public readonly friendlyName: string;
     public refreshRate = 0; // milliseconds, 0 for static content
+    @Input() public moduleChanged: EventEmitter<boolean> = new EventEmitter();
 
     private id: Guid;
 
@@ -47,6 +49,11 @@ export abstract class BashBoardModule implements NgGridItemConfig {
     }
 
     abstract updateContent(): void;
+
+    public updateSettings(settings: Setting[]) {
+        this.procesSettings(settings);
+        this.moduleChanged.emit(true);
+    }
 
     abstract getSettings(): Setting[];
 

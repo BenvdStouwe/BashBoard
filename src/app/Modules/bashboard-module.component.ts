@@ -1,18 +1,7 @@
-import { Setting } from '../Settings/Setting';
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { BashBoardModule } from '../Model/BashBoardModule';
-import { ModuleSettingsComponent } from '../Settings/modulesettings.component';
+import { Directive } from '@angular/core';
 
-@Component({
-    selector: 'bashboard-module',
-    templateUrl: './bashboard-module.view.html'
+@Directive({
+    selector: 'bashboard-module'
 })
-export class BashBoardModuleComponent {
-    @Input() public module: BashBoardModule;
-    @Output() public moduleChanged: EventEmitter<boolean> = new EventEmitter();
-
-    public updateSettings(settings: Setting[]) {
-        this.module.procesSettings(settings);
-        this.moduleChanged.emit(true);
-    }
+export class BashBoardModuleDirective {
 }
