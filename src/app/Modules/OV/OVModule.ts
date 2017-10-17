@@ -4,7 +4,7 @@ import { Setting } from '../../Settings/Setting';
 import { InputType, Timer } from '../../Model/Utilities';
 
 export class OVModule extends BashBoardModule {
-    public static readonly friendlyName = 'Reisinformatie';
+    public readonly friendlyName = 'Reisinformatie';
     public readonly refreshRate = 120000;
 
     public station: string;
@@ -18,12 +18,7 @@ export class OVModule extends BashBoardModule {
             this.station = module.station;
             this.warnings = module.warnings;
         } else {
-            this.title = 'OV Info';
-            this.backgroundColor = '#ffb310';
-            this.textColor = '#fffff';
-            this.showTimes = true;
-            this.showWarnings = false;
-            this.needsSetup = true;
+            this.setDefaultSettings();
         }
         this.updateContent();
     }
@@ -40,6 +35,15 @@ export class OVModule extends BashBoardModule {
         this.updating = false;
     }
 
+    public setDefaultSettings(): void {
+        this.title = 'OV Info';
+        this.backgroundColor = '#ffb310';
+        this.textColor = '#ffffff';
+        this.showTimes = true;
+        this.showWarnings = false;
+        this.needsSetup = true;
+    }
+
     public getSettings(): Setting[] {
         return [
             new Setting(SettingNames.TITLE, this.title),
@@ -54,20 +58,32 @@ export class OVModule extends BashBoardModule {
 
     public procesSettings(settings: Setting[]) {
         super.procesSettings(settings);
+        let updateContent = false;
         for (let setting of settings) {
             switch (setting.name) {
                 case OVSettingNames.STATION:
-                    this.station = setting.value;
+                    if (this.station !== setting.value) {
+                        this.station = setting.value;
+                        updateContent = true;
+                    }
                     break;
                 case OVSettingNames.TRAINTIMES:
-                    this.showTimes = setting.value;
+                    if (this.showTimes !== setting.value) {
+                        this.showTimes = setting.value;
+                        updateContent = true;
+                    }
                     break;
                 case OVSettingNames.WARNINGS:
-                    this.showWarnings = setting.value;
+                    if (this.showWarnings !== setting.value) {
+                        this.showWarnings = setting.value;
+                        updateContent = true;
+                    }
                     break;
             }
         }
-        this.updateContent();
+        if (updateContent) {
+            this.updateContent();
+        }
     }
 
     private getNSWarnings(): OVMelding[] {

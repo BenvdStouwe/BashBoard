@@ -1,12 +1,12 @@
-<button class='module-settings btn btn-default' *ngIf='!module.refreshRate' (click)='updateModule()'>
-  <span class="fa quick-spin fa-refresh"></span>
+<button class='module-settings btn btn-default' *ngIf='showUpdateButton()' (click)='updateModule()' [disabled]='updating()'>
+  <span [class.fa-quickspin]='updating()' class="fa fa-refresh"></span>
 </button>
 <button class='module-settings btn btn-default fa fa-cog' (click)='open(module)'>
 </button>
 <ng-template class="modal fade" #module let-c="close" let-d="dismiss">
   <div class="modal-header">
     <h4 class="modal-title">
-      Module instellingen
+      {{getTitle()}} instellingen
     </h4>
     <button type="button" class="close" (click)='d()' aria-label="Close">
       <span aria-hidden="true">&times;</span>

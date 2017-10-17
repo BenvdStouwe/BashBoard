@@ -26,7 +26,7 @@ export class BashBoardComponent implements OnInit {
   public addModule(module: BashBoardModule): void {
     module = new OVModule();
 
-    while (this.modules.some(m => m.payload === module.payload)) {
+    while (this.modules.some(m => m.getId() === module.getId())) {
       module.generateNewGuid();
     }
 
@@ -65,9 +65,9 @@ export class BashBoardComponent implements OnInit {
     return modules;
   }
 
-  // private saveGridConfig(): void {
-  //   this.storage.store(StorageNames.GRIDCONFIG, this.gridConfig);
-  // }
+  private saveGridConfig(): void {
+    this.storage.store(StorageNames.GRIDCONFIG, this.gridConfig);
+  }
 
   private getGridConfig(): GridConfig {
     let gridConfig = this.storage.retrieve(StorageNames.GRIDCONFIG);

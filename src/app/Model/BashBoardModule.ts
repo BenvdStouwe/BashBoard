@@ -1,12 +1,13 @@
 import { NgGridItemConfig } from 'angular2-grid';
 import { Setting } from '../Settings/Setting';
-import { Guid, Timer } from './Utilities';
+import { Guid, Timer, InputType } from './Utilities';
 
 export abstract class BashBoardModule implements NgGridItemConfig {
-    public static readonly friendlyName: string;
+    public readonly friendlyName: string;
     public refreshRate = 0; // milliseconds, 0 for static content
 
-    public payload: Guid;
+    private id: Guid;
+
     public className: string; // Needed so objects from LocalStorage can be cast to correct class
     public title?: string;
     public subTitle?: string;
@@ -21,7 +22,7 @@ export abstract class BashBoardModule implements NgGridItemConfig {
     public needsSetup = false; // Shows settings when added
 
     protected timer: Timer;
-    public updating: boolean;
+    protected updating: boolean;
 
     constructor(module?: BashBoardModule) {
         // When modules are loaded from the LocalStorage, they are just objects and not BashBoardModules.
@@ -29,7 +30,7 @@ export abstract class BashBoardModule implements NgGridItemConfig {
         // Subclasses can override the constructor to set extra properties.
         // Payload and classname should NOT be altered
         if (module) {
-            this.payload = module.payload;
+            this.id = module.id;
             this.className = module.className;
             this.title = module.title;
             this.col = module.col;
@@ -49,16 +50,18 @@ export abstract class BashBoardModule implements NgGridItemConfig {
 
     abstract getSettings(): Setting[];
 
-    public canUpdate(): boolean {
-        if (this.updating) {
-            return false;
-        }
+    abstract setDefaultSettings(): void;
 
-        return true;
+    public canUpdate(): boolean {
+        return !this.updating;
     }
 
-    public generateNewGuid() {
-        this.payload = Guid.newGuid();
+    public getId(): Guid {
+        return this.id;
+    }
+
+    public generateNewGuid(): void {
+        this.id = Guid.newGuid();
     }
 
     public setTimer(): void {
@@ -84,26 +87,42 @@ export abstract class BashBoardModule implements NgGridItemConfig {
         }
     }
 
-    public procesSettings(settings: Setting[]) {
+    public procesSettings(settings: Setting[]): void {
         // Override in subclass to proces module specific attributes
         // Do call this one with super.procesSettings in your implementation
         this.needsSetup = false;
         for (let setting of settings) {
             switch (setting.name) {
                 case SettingNames.TITLE:
-                    this.title = setting.value;
+                    if (this.title !== setting.value) {
+                        this.title = setting.value;
+                    }
                     break;
                 case SettingNames.SUBTITLE:
-                    this.subTitle = setting.value;
+                    if (this.subTitle !== setting.value) {
+                        this.subTitle = setting.value;
+                    }
                     break;
                 case SettingNames.BACKGROUNDCOLOR:
-                    this.backgroundColor = setting.value;
+                    if (this.backgroundColor !== setting.value) {
+                        this.backgroundColor = setting.value;
+                    }
                     break;
                 case SettingNames.TEXTCOLOR:
-                    this.textColor = setting.value;
+                    if (this.textColor !== setting.value) {
+                        this.textColor = setting.value;
+                    }
                     break;
             }
         }
+    }
+
+    protected getBasicSettings(): Setting[] {
+        return [
+            new Setting(SettingNames.TITLE, this.title),
+            new Setting(SettingNames.BACKGROUNDCOLOR, this.backgroundColor, InputType.COLOR),
+            new Setting(SettingNames.TEXTCOLOR, this.textColor, InputType.COLOR)
+        ];
     }
 }
 

@@ -1,4 +1,4 @@
-import { NgGridConfig as INgGridConfig } from 'angular2-grid/main';
+import { NgGridConfig as INgGridConfig } from 'angular2-grid';
 
 export class GridConfig implements INgGridConfig  {
     public readonly version: number;

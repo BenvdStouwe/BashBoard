@@ -12,7 +12,7 @@ import { InputType } from '../Model/Utilities';
 export class ModuleSettingsComponent {
     private settings: Setting[];
 
-    @Input() private module: BashBoardModule;
+    @Input() public module: BashBoardModule;
     @Output() public settingsClosed: EventEmitter<Setting[]> = new EventEmitter();
 
     constructor(private modalService: NgbModal) { }
@@ -23,7 +23,7 @@ export class ModuleSettingsComponent {
         }
     }
 
-    public open(settings: any) {
+    public open(settings: any): void {
         this.settings = this.module.getSettings();
         this.modalService.open(settings).result.then((result) => {
             this.settingsClosed.emit(this.settings);
@@ -31,8 +31,20 @@ export class ModuleSettingsComponent {
         });
     }
 
-    public updateModule() {
+    public getTitle(): string {
+        return this.module.friendlyName;
+    }
+
+    public updateModule(): void {
         this.module.updateContent();
+    }
+
+    public showUpdateButton(): boolean {
+        return this.module.refreshRate > 0;
+    }
+
+    public updating(): boolean {
+        return !this.module.canUpdate();
     }
 
     public valueIsDate(inputType: InputType): boolean {

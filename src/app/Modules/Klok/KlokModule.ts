@@ -3,20 +3,21 @@ import { Setting } from '../../Settings/Setting';
 import { Timer } from '../../Model/Utilities';
 
 export class KlokModule extends BashBoardModule {
-    public static readonly friendlyName = 'Klok';
-    public defaultHeight = 1;
+    public readonly friendlyName = 'Klok';
     public readonly refreshRate = 1000;
+    public defaultHeight = 1;
     public showDate = false;
     public showSeconds = false;
 
     private time: Date = new Date();
 
-    constructor(module?: BashBoardModule) {
+    constructor(module?: KlokModule) {
         super(module);
         if (!module) {
-            this.title = 'Klok'
-            this.backgroundColor = '#1d64d6';
-            this.textColor = '#ffffff';
+            this.setDefaultSettings();
+        } else {
+            this.showDate = module.showDate;
+            this.showSeconds = module.showSeconds;
         }
         this.updateContent();
     }
@@ -25,6 +26,12 @@ export class KlokModule extends BashBoardModule {
         this.time = new Date();
         console.log(this.time);
         super.setTimer();
+    }
+
+    public setDefaultSettings(): void {
+        this.title = 'Klok'
+        this.backgroundColor = '#1d64d6';
+        this.textColor = '#ffffff';
     }
 
     public procesSettings(settings: Setting[]) {

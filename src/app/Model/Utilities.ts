@@ -31,7 +31,7 @@ export class Timer {
     }
 
     public restart(): void {
-        clearTimeout(this.id);
+        this.pause();
         this.start = null;
         this.resume();
     }

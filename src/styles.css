@@ -5,6 +5,12 @@ body {
   background-color: var(--background-color);
 }
 
+input[type=color] {
+  width: 200px;
+  height: auto;
+  float: right;
+}
+
 #menu {
   position: absolute;
   right: 1px;
@@ -43,7 +49,7 @@ body {
 }
 
 /* Loader */
-.quick-spin {
+.fa-quickspin {
   animation: fa-spin 1s infinite linear;
 }
 
