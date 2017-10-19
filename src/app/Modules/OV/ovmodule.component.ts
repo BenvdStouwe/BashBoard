@@ -1,8 +1,9 @@
-import { BashBoardModule, SettingNames } from '../../Model/BashBoardModule';
+import { BashBoardModule, SettingNames } from './../../Model/BashBoardModule';
 import { OVMelding } from './OVMelding';
-import { Setting } from '../../Settings/Setting';
-import { InputType, Timer } from '../../Model/Utilities';
+import { Setting } from './../../Settings/Setting';
+import { InputType, Timer } from './../../Model/Utilities';
 import { Component } from '@angular/core';
+import { OVModuleConfig } from './ovmodule.config';
 
 @Component({
     templateUrl: './ovmodule.view.html'
@@ -11,16 +12,15 @@ export class OVModuleComponent extends BashBoardModule {
     public readonly friendlyName = 'Reisinformatie';
     public readonly refreshRate = 120000;
 
+    protected config: OVModuleConfig;
+
     public station: string;
     public warnings: OVMelding[];
-    public showTimes: Boolean;
-    public showWarnings: Boolean;
 
-    constructor(module?: OVModuleComponent) {
+    constructor(module?: OVModuleConfig) {
         super(module);
         if (module) {
             this.station = module.station;
-            this.warnings = module.warnings;
         } else {
             this.setDefaultSettings();
         }
@@ -40,23 +40,23 @@ export class OVModuleComponent extends BashBoardModule {
     }
 
     public setDefaultSettings(): void {
-        this.title = 'OV Info';
-        this.backgroundColor = '#ffb310';
-        this.textColor = '#ffffff';
-        this.showTimes = true;
-        this.showWarnings = false;
-        this.needsSetup = true;
+        this.config.title = 'OV Info';
+        this.config.backgroundColor = '#ffb310';
+        this.config.textColor = '#ffffff';
+        this.config.showTimes = true;
+        this.config.showWarnings = false;
+        this.config.needsSetup = true;
     }
 
     public getSettings(): Setting[] {
         return [
-            new Setting(SettingNames.TITLE, this.title),
-            new Setting(SettingNames.BACKGROUNDCOLOR, this.backgroundColor),
-            new Setting(SettingNames.TEXTCOLOR, this.textColor, InputType.COLOR),
+            new Setting(SettingNames.TITLE, this.config.title),
+            new Setting(SettingNames.BACKGROUNDCOLOR, this.config.backgroundColor),
+            new Setting(SettingNames.TEXTCOLOR, this.config.textColor, InputType.COLOR),
 
             new Setting(OVSettingNames.STATION, this.station),
-            new Setting(OVSettingNames.TRAINTIMES, this.showTimes, InputType.BOOLEAN),
-            new Setting(OVSettingNames.WARNINGS, this.showWarnings, InputType.BOOLEAN)
+            new Setting(OVSettingNames.TRAINTIMES, this.config.showTimes, InputType.BOOLEAN),
+            new Setting(OVSettingNames.WARNINGS, this.config.showWarnings, InputType.BOOLEAN)
         ];
     }
 
@@ -72,14 +72,14 @@ export class OVModuleComponent extends BashBoardModule {
                     }
                     break;
                 case OVSettingNames.TRAINTIMES:
-                    if (this.showTimes !== setting.value) {
-                        this.showTimes = setting.value;
+                    if (this.config.showTimes !== setting.value) {
+                        this.config.showTimes = setting.value;
                         updateContent = true;
                     }
                     break;
                 case OVSettingNames.WARNINGS:
-                    if (this.showWarnings !== setting.value) {
-                        this.showWarnings = setting.value;
+                    if (this.config.showWarnings !== setting.value) {
+                        this.config.showWarnings = setting.value;
                         updateContent = true;
                     }
                     break;

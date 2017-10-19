@@ -1,11 +1,12 @@
-<div    [ngGridItem]='module' 
-[style.background-color]='backgroundColor'
-[style.color]='textColor'
-(onChangeStart)='pauseTimer()'
-(onChangeStop)='resumeTimer()'>
-<h2 *ngIf='title' [innerHtml]='title'></h2>
+<div [ngGridItem]='module'
+     [style.background-color]='backgroundColor'
+     [style.color]='textColor'
+     (onChangeStart)='pauseTimer()'
+     (onChangeStop)='resumeTimer()'>
+    <h2 *ngIf='title'
+        [innerHtml]='title'></h2>
 
-<module-settings    [module]='module'
-            (settingsClosed)='updateSettings($event)'>
-</module-settings>
+    <module-settings [module]='module'
+                     (settingsClosed)='updateSettings($event)'>
+    </module-settings>
 </div>

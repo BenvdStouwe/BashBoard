@@ -1,17 +1,18 @@
-import { BashBoardModule, SettingNames } from '../../Model/BashBoardModule';
-import { Setting } from '../../Settings/Setting';
 import { Component } from '@angular/core';
 
-@Component ({
-    templateUrl: ''
+import { BashBoardModule, SettingNames } from '../../Model/BashBoardModule';
+import { ItemConfig } from '../../Model/ItemConfig';
+import { Setting } from '../../Settings/Setting';
+
+@Component({
+    templateUrl: './buienradarmodule.view.html'
 })
 export class BuienradarModuleComponent extends BashBoardModule {
     public readonly friendlyName = 'Buienradar';
-    public title: string;
 
-    constructor(module?: BashBoardModule) {
-        super(module);
-        if (!module) {
+    constructor(config?: ItemConfig) {
+        super(config);
+        if (!config) {
             this.setDefaultSettings();
         }
     }
@@ -21,13 +22,13 @@ export class BuienradarModuleComponent extends BashBoardModule {
     }
 
     public setDefaultSettings(): void {
-        this.title = 'Buienradar';
+        this.config.title = 'Buienradar';
     }
 
     public getSettings(): Setting[] {
         let settings = [
-            new Setting(SettingNames.TITLE, this.title),
-            new Setting(SettingNames.BACKGROUNDCOLOR, this.backgroundColor)
+            new Setting(SettingNames.TITLE, this.config.title),
+            new Setting(SettingNames.BACKGROUNDCOLOR, this.config.backgroundColor)
         ];
 
         return settings;

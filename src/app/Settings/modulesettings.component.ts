@@ -1,8 +1,9 @@
-import { Component, Input, OnInit, Output, EventEmitter, ElementRef } from '@angular/core';
-import { BashBoardModule } from '../Model/BashBoardModule';
-import { Setting } from './Setting';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
+import { BashBoardModule } from '../Model/BashBoardModule';
 import { InputType } from '../Model/Utilities';
+import { Setting } from './Setting';
 
 @Component({
     selector: 'module-settings',
@@ -18,9 +19,9 @@ export class ModuleSettingsComponent {
     constructor(private modalService: NgbModal) { }
 
     ngOnInit(): void {
-        if (this.module.needsSetup) {
-            this.open(this.module);
-        }
+        // if (this.module.needsSetup) {
+        //     this.open(this.module);
+        // }
     }
 
     public open(settings: any): void {

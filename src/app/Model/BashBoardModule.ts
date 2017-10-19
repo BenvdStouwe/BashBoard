@@ -1,54 +1,48 @@
-import { NgGridItemConfig } from 'angular2-grid';
-import { Setting } from '../Settings/Setting';
-import { ModuleSettingsComponent } from '../Settings/modulesettings.component'
-import { Guid, Timer, InputType } from './Utilities';
-import { EventEmitter, Input, Component } from '@angular/core';
+import { EventEmitter, Input } from '@angular/core';
 
-export abstract class BashBoardModule implements NgGridItemConfig {
+import { Setting } from '../Settings/Setting';
+import { ItemConfig } from './ItemConfig';
+import { Guid, InputType, Timer } from './Utilities';
+
+export abstract class BashBoardModule {
     public readonly friendlyName: string;
     public refreshRate = 0; // milliseconds, 0 for static content
-    @Input() public moduleChanged: EventEmitter<boolean> = new EventEmitter();
-
-    private id: Guid;
-
-    public className: string; // Needed so objects from LocalStorage can be cast to correct class
-    public title?: string;
-    public col: number;
-    public row: number;
-    public sizex: number; // # of columns wide
-    public sizey: number; // # of rows high
-    public defaultWidth = 1; // default for sizex
-    public defaultHeight = 1; // default for sizey
-    public backgroundColor = '#333333'; // Due to HTML input type color standards, use 6 character hexcolors
-    public textColor = '#ffffff'; // Due to HTML input type color standards, use 6 hexcharacter colors
     public needsSetup = false; // Shows settings when added
 
+    private id: Guid;
+    protected config: ItemConfig;
     protected timer: Timer;
     protected updating: boolean;
 
-    constructor(module?: BashBoardModule) {
+    @Input() public moduleChanged: EventEmitter<boolean> = new EventEmitter();
+
+    constructor(config?: ItemConfig) {
         // When modules are loaded from the LocalStorage, they are just objects and not BashBoardModules.
         // They are injected to the BashBoardModule constructor to set values.
         // Subclasses can override the constructor to set extra properties.
         // Payload and classname should NOT be altered
-        if (module) {
-            this.id = module.id;
-            this.className = module.className;
-            this.title = module.title;
-            this.col = module.col;
-            this.row = module.row;
-            this.sizex = module.sizex;
-            this.sizey = module.sizey;
-            this.backgroundColor = module.backgroundColor;
-            this.textColor = module.textColor;
+        if (config) {
+            this.config.id = config.id;
+            this.config.moduleType = config.moduleType;
+            this.config.title = config.title;
+            this.config.col = config.col;
+            this.config.row = config.row;
+            this.config.sizex = config.sizex;
+            this.config.sizey = config.sizey;
+            this.config.backgroundColor = config.backgroundColor;
+            this.config.textColor = config.textColor;
             this.needsSetup = false;
         } else {
             this.generateNewGuid();
-            this.className = this.constructor.name;
+            this.config.moduleType = this.constructor.name;
         }
     }
 
     abstract updateContent(): void;
+
+    public getConfig(): ItemConfig {
+        return this.config;
+    }
 
     public updateSettings(settings: Setting[]) {
         this.procesSettings(settings);
@@ -57,7 +51,11 @@ export abstract class BashBoardModule implements NgGridItemConfig {
 
     abstract getSettings(): Setting[];
 
-    abstract setDefaultSettings(): void;
+    public abstract setDefaultSettings(): void;
+
+    public getModuleType(): string {
+        return this.config.moduleType;
+    }
 
     public canUpdate(): boolean {
         return !this.updating;
@@ -101,18 +99,18 @@ export abstract class BashBoardModule implements NgGridItemConfig {
         for (let setting of settings) {
             switch (setting.name) {
                 case SettingNames.TITLE:
-                    if (this.title !== setting.value) {
-                        this.title = setting.value;
+                    if (this.config.title !== setting.value) {
+                        this.config.title = setting.value;
                     }
                     break;
                 case SettingNames.BACKGROUNDCOLOR:
-                    if (this.backgroundColor !== setting.value) {
-                        this.backgroundColor = setting.value;
+                    if (this.config.backgroundColor !== setting.value) {
+                        this.config.backgroundColor = setting.value;
                     }
                     break;
                 case SettingNames.TEXTCOLOR:
-                    if (this.textColor !== setting.value) {
-                        this.textColor = setting.value;
+                    if (this.config.textColor !== setting.value) {
+                        this.config.textColor = setting.value;
                     }
                     break;
             }
@@ -121,9 +119,9 @@ export abstract class BashBoardModule implements NgGridItemConfig {
 
     protected getBasicSettings(): Setting[] {
         return [
-            new Setting(SettingNames.TITLE, this.title),
-            new Setting(SettingNames.BACKGROUNDCOLOR, this.backgroundColor, InputType.COLOR),
-            new Setting(SettingNames.TEXTCOLOR, this.textColor, InputType.COLOR)
+            new Setting(SettingNames.TITLE, this.config.title),
+            new Setting(SettingNames.BACKGROUNDCOLOR, this.config.backgroundColor, InputType.COLOR),
+            new Setting(SettingNames.TEXTCOLOR, this.config.textColor, InputType.COLOR)
         ];
     }
 }

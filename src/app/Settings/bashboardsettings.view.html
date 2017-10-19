@@ -1,9 +1,15 @@
-<ng-template class="modal fade" #module let-c="close" let-d="dismiss">
+<ng-template class="modal fade"
+             #module
+             let-c="close"
+             let-d="dismiss">
   <div class="modal-header">
     <h4 class="modal-title">
       BashBoard instellingen
     </h4>
-    <button type="button" class="close" (click)='d()' aria-label="Close">
+    <button type="button"
+            class="close"
+            (click)='d()'
+            aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -12,17 +18,21 @@
       <div class='col-lg-12'>
         <div class='input-group'>
           <span class='input-group-btn'>
-              <button     class='btn btn-secondary' 
-                          type='button' >
-                Aantal rijen
-              </button>
+            <button class='btn btn-secondary'
+                    type='button'>
+              Aantal rijen
+            </button>
           </span>
-          <input class="form-control" [type]='setting.inputType' [(ngModel)]='gridConfig.max_rows' />
+          <input class="form-control"
+                 [type]='setting.inputType'
+                 [(ngModel)]='gridConfig.max_rows' />
         </div>
       </div>
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)='c()'>Sluiten</button>
+    <button type="button"
+            class="btn btn-secondary"
+            (click)='c()'>Sluiten</button>
   </div>
 </ng-template>
