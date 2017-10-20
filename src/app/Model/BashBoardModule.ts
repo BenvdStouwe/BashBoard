@@ -1,15 +1,15 @@
-import { EventEmitter, Input } from '@angular/core';
+import { EventEmitter, Input } from "@angular/core";
 
-import { Setting } from '../Settings/Setting';
-import { ItemConfig } from './ItemConfig';
-import { Guid, InputType, Timer } from './Utilities';
+import { Setting } from "../Settings/Setting";
+import { ItemConfig } from "./ItemConfig";
+import { Guid, InputType, Timer } from "./Utilities";
 
 export abstract class BashBoardModule {
     public readonly friendlyName: string;
-    public refreshRate = 0; // milliseconds, 0 for static content
-    public needsSetup = false; // Shows settings when added
+    public needsSetup = false; // shows settings when added
 
     private id: Guid;
+    protected refreshRate = 0; // milliseconds, 0 for static content
     protected config: ItemConfig;
     protected timer: Timer;
     protected updating: boolean;
@@ -17,10 +17,10 @@ export abstract class BashBoardModule {
     @Input() public moduleChanged: EventEmitter<boolean> = new EventEmitter();
 
     constructor(config?: ItemConfig) {
-        // When modules are loaded from the LocalStorage, they are just objects and not BashBoardModules.
-        // They are injected to the BashBoardModule constructor to set values.
-        // Subclasses can override the constructor to set extra properties.
-        // Payload and classname should NOT be altered
+        // when modules are loaded from the LocalStorage, they are just objects and not BashBoardModules.
+        // they are injected to the BashBoardModule constructor to set values.
+        // subclasses can override the constructor to set extra properties.
+        // payload and classname should NOT be altered
         if (config) {
             this.config.id = config.id;
             this.config.moduleType = config.moduleType;
@@ -44,7 +44,7 @@ export abstract class BashBoardModule {
         return this.config;
     }
 
-    public updateSettings(settings: Setting[]) {
+    public updateSettings(settings: Setting[]): void {
         this.procesSettings(settings);
         this.moduleChanged.emit(true);
     }
@@ -58,7 +58,7 @@ export abstract class BashBoardModule {
     }
 
     public canUpdate(): boolean {
-        return !this.updating;
+        return !this.updating && this.refreshRate > 0;
     }
 
     public getId(): Guid {
@@ -93,8 +93,8 @@ export abstract class BashBoardModule {
     }
 
     public procesSettings(settings: Setting[]): void {
-        // Override in subclass to proces module specific attributes
-        // Do call this one with super.procesSettings in your implementation
+        // override in subclass to proces module specific attributes
+        // do call this one with super.procesSettings in your implementation
         this.needsSetup = false;
         for (let setting of settings) {
             switch (setting.name) {
@@ -127,7 +127,7 @@ export abstract class BashBoardModule {
 }
 
 export enum SettingNames {
-    TITLE = 'Titel',
-    BACKGROUNDCOLOR = 'Achtergrondkleur',
-    TEXTCOLOR = 'Tekstkleur'
+    TITLE = "Titel",
+    BACKGROUNDCOLOR = "Achtergrondkleur",
+    TEXTCOLOR = "Tekstkleur"
 }

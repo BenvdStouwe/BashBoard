@@ -1,15 +1,17 @@
-import { BashBoardModule, SettingNames } from './../../Model/BashBoardModule';
-import { OVMelding } from './OVMelding';
-import { Setting } from './../../Settings/Setting';
-import { InputType, Timer } from './../../Model/Utilities';
-import { Component } from '@angular/core';
-import { OVModuleConfig } from './ovmodule.config';
+import { HttpClient } from "@angular/common/http";
+import { Component } from "@angular/core";
+
+import { BashBoardModule, SettingNames } from "./../../Model/BashBoardModule";
+import { InputType } from "./../../Model/Utilities";
+import { Setting } from "./../../Settings/Setting";
+import { OVMelding } from "./OVMelding";
+import { OVModuleConfig } from "./ovmodule.config";
 
 @Component({
-    templateUrl: './ovmodule.view.html'
+    templateUrl: "./ovmodule.view.html"
 })
 export class OVModuleComponent extends BashBoardModule {
-    public readonly friendlyName = 'Reisinformatie';
+    public readonly friendlyName = "Reisinformatie";
     public readonly refreshRate = 120000;
 
     protected config: OVModuleConfig;
@@ -17,7 +19,7 @@ export class OVModuleComponent extends BashBoardModule {
     public station: string;
     public warnings: OVMelding[];
 
-    constructor(module?: OVModuleConfig) {
+    constructor(private http: HttpClient, module?: OVModuleConfig) {
         super(module);
         if (module) {
             this.station = module.station;
@@ -31,21 +33,25 @@ export class OVModuleComponent extends BashBoardModule {
         if (!this.canUpdate()) {
             return;
         }
+        if (!this.station) {
+            alert("Er is geen station voor de reisinformatie geselecteerd.");
+            return;
+        }
         this.updating = true;
         let warnings = this.getNSTrainTimes();
-        console.log('NS meldingen ophalen');
+        console.log("NS meldingen ophalen");
         this.warnings = warnings;
         super.setTimer();
         this.updating = false;
     }
 
     public setDefaultSettings(): void {
-        this.config.title = 'OV Info';
-        this.config.backgroundColor = '#ffb310';
-        this.config.textColor = '#ffffff';
+        this.config.title = "Reisinformatie";
+        this.config.backgroundColor = "#ffb310";
+        this.config.textColor = "#ffffff";
         this.config.showTimes = true;
         this.config.showWarnings = false;
-        this.config.needsSetup = true;
+        this.needsSetup = true;
     }
 
     public getSettings(): Setting[] {
@@ -60,7 +66,7 @@ export class OVModuleComponent extends BashBoardModule {
         ];
     }
 
-    public procesSettings(settings: Setting[]) {
+    public procesSettings(settings: Setting[]): void {
         let updateContent = false;
         super.procesSettings(settings);
         for (let setting of settings) {
@@ -95,16 +101,16 @@ export class OVModuleComponent extends BashBoardModule {
     }
 
     private getNSTrainTimes(): OVMelding[] {
-        let url = 'https://webservices.ns.nl/ns-api-avt?station=' + this.station;
-        // let result = this.http.get(url).subscribe(data => {
-        //     console.log(data);
-        // })
+        let url = "https://webservices.ns.nl/ns-api-avt?station=" + this.station;
+        let result = this.http.get(url).subscribe(data => {
+            console.log(data);
+        });
         return new Array<OVMelding>();
     }
 }
 
 enum OVSettingNames {
-    STATION = 'Station',
-    TRAINTIMES = 'Toon vertrektijden',
-    WARNINGS = 'Toon waarschuwingen'
+    STATION = "Station",
+    TRAINTIMES = "Toon vertrektijden",
+    WARNINGS = "Toon waarschuwingen"
 }

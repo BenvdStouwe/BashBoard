@@ -1,14 +1,14 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 
-import { BashBoardModule, SettingNames } from '../../Model/BashBoardModule';
-import { ItemConfig } from '../../Model/ItemConfig';
-import { Setting } from '../../Settings/Setting';
+import { BashBoardModule, SettingNames } from "../../Model/BashBoardModule";
+import { ItemConfig } from "../../Model/ItemConfig";
+import { Setting } from "../../Settings/Setting";
 
 @Component({
-    templateUrl: './buienradarmodule.view.html'
+    templateUrl: "./buienradarmodule.view.html"
 })
 export class BuienradarModuleComponent extends BashBoardModule {
-    public readonly friendlyName = 'Buienradar';
+    public readonly friendlyName = "Buienradar";
 
     constructor(config?: ItemConfig) {
         super(config);
@@ -22,7 +22,7 @@ export class BuienradarModuleComponent extends BashBoardModule {
     }
 
     public setDefaultSettings(): void {
-        this.config.title = 'Buienradar';
+        this.config.title = "Buienradar";
     }
 
     public getSettings(): Setting[] {

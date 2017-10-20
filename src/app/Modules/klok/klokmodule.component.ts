@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 
-import { BashBoardModule, SettingNames } from '../../Model/BashBoardModule';
-import { Setting } from '../../Settings/Setting';
-import { KlokModuleConfig } from './klokmodule.config';
+import { BashBoardModule, SettingNames } from "../../Model/BashBoardModule";
+import { Setting } from "../../Settings/Setting";
+import { KlokModuleConfig } from "./klokmodule.config";
 
 @Component({
-    templateUrl: './KlokModule.view.html'
+    templateUrl: "./KlokModule.view.html"
 })
 export class KlokModuleComponent extends BashBoardModule implements OnInit {
-    public readonly friendlyName = 'Klok';
-    public readonly refreshRate = 1000;
+    public readonly friendlyName = "Klok";
+    protected refreshRate = 1000;
     protected config: KlokModuleConfig;
 
     private time: Date = new Date();
@@ -28,7 +28,7 @@ export class KlokModuleComponent extends BashBoardModule implements OnInit {
         this.updateContent();
     }
 
-    public updateContent() {
+    public updateContent(): void {
         if (!this.canUpdate()) {
             return;
         }
@@ -37,15 +37,15 @@ export class KlokModuleComponent extends BashBoardModule implements OnInit {
     }
 
     public setDefaultSettings(): void {
-        this.config.title = 'Klok'
-        this.config.backgroundColor = '#1d64d6';
-        this.config.textColor = '#ffffff';
+        this.config.title = "Klok";
+        this.config.backgroundColor = "#1d64d6";
+        this.config.textColor = "#ffffff";
         this.config.showDate = true;
         this.config.showSeconds = false;
         this.config.defaultHeight = 1;
     }
 
-    public procesSettings(settings: Setting[]) {
+    public procesSettings(settings: Setting[]): void {
         super.procesSettings(settings);
         for (let setting of settings) {
             switch (setting.name) {
@@ -72,6 +72,6 @@ export class KlokModuleComponent extends BashBoardModule implements OnInit {
 }
 
 enum KlokSettingsNames {
-    SHOWDATE = 'Toon datum',
-    SHOWSECONDS = 'Toon seconden'
+    SHOWDATE = "Toon datum",
+    SHOWSECONDS = "Toon seconden"
 }

@@ -1,4 +1,4 @@
-import { ItemConfig } from '../../Model/ItemConfig';
+import { ItemConfig } from "../../Model/ItemConfig";
 
 export class OVModuleConfig extends ItemConfig {
     public station: string;

@@ -8,6 +8,6 @@ export class OVMelding {
 }
 
 enum Vervoerder {
-    NS = 'NS',
-    ARIVA = 'Ariva'
+    NS = "NS",
+    ARIVA = "Ariva"
 }

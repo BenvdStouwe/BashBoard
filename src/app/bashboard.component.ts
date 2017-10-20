@@ -1,14 +1,14 @@
-import { Component, ComponentFactoryResolver, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, ComponentFactoryResolver, OnInit, QueryList, ViewChildren } from "@angular/core";
 
-import { BashBoardModule } from './Model/BashBoardModule';
-import { GridConfig } from './Model/GridConfig';
-import { BashBoardModuleDirective } from './Modules/bashboard-module.directive';
-import { BashBoardModulesService } from './Modules/bashboard-modules.service';
-import { Modules } from './Modules/Modules';
+import { BashBoardModule } from "./Model/BashBoardModule";
+import { GridConfig } from "./Model/GridConfig";
+import { BashBoardModuleDirective } from "./Modules/bashboard-module.directive";
+import { BashBoardModulesService } from "./Modules/bashboard-modules.service";
+import { Modules } from "./Modules/Modules";
 
 @Component({
-  selector: 'bashboard',
-  templateUrl: './bashboard.view.html',
+  selector: "bashboard",
+  templateUrl: "./bashboard.view.html",
 })
 export class BashBoardComponent implements OnInit {
   @ViewChildren(BashBoardModuleDirective) bashBoardModules: QueryList<BashBoardModuleDirective>;
@@ -16,14 +16,18 @@ export class BashBoardComponent implements OnInit {
   public modules: BashBoardModule[];
   public gridConfig: GridConfig;
 
-  constructor(private modulesService: BashBoardModulesService, private componentFactoryResolver: ComponentFactoryResolver) { };
+  constructor(private modulesService: BashBoardModulesService, private componentFactoryResolver: ComponentFactoryResolver) { }
 
   ngOnInit(): void {
     this.modules = this.getModules();
-
+    this.addModules(this.modules);
     this.gridConfig = this.getDefaultGridConfig();
     this.setStyleSettings();
     setTimeout(() => this.visible = true, 1);
+  }
+
+  public addModules(modules: BashBoardModule[]): void {
+    modules.forEach(module => this.addModule(module));
   }
 
   public addModule(module: BashBoardModule): void {
@@ -41,9 +45,9 @@ export class BashBoardComponent implements OnInit {
   }
 
   public setStyleSettings(): void {
-    let bodyElement = document.querySelector('body');
+    let bodyElement = document.querySelector("body");
     bodyElement.style.setProperty(StyleSettingNames.BACKGROUNDCOLOR, this.gridConfig.background_color);
-    bodyElement.style.setProperty(StyleSettingNames.BORDERWIDTH, this.gridConfig.border_width + 'px');
+    bodyElement.style.setProperty(StyleSettingNames.BORDERWIDTH, this.gridConfig.border_width + "px");
   }
 
   public saveLayout(): void {
@@ -69,6 +73,6 @@ export class BashBoardComponent implements OnInit {
 }
 
 enum StyleSettingNames {
-  BACKGROUNDCOLOR = '--background-color',
-  BORDERWIDTH = '--border-width'
+  BACKGROUNDCOLOR = "--background-color",
+  BORDERWIDTH = "--border-width"
 }

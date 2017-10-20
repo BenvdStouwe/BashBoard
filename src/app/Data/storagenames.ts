@@ -1,4 +1,4 @@
 export enum StorageNames {
-    ITEMCONFIGS = 'ItemConfigs',
-    GRIDCONFIG = 'GridConfig'
+    ITEMCONFIGS = "ItemConfigs",
+    GRIDCONFIG = "GridConfig"
 }
