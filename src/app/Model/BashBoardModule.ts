@@ -1,67 +1,53 @@
-import { NgGridItemConfig } from 'angular2-grid';
-import { Setting } from '../Settings/Setting';
-import { Guid, Timer, InputType } from './Utilities';
+import { EventEmitter, Input } from "@angular/core";
 
-export abstract class BashBoardModule implements NgGridItemConfig {
+import { Setting } from "../Settings/Setting";
+import { ItemConfig } from "./ItemConfig";
+import { Guid, InputType, Timer } from "./Utilities";
+
+export abstract class BashBoardModule {
     public readonly friendlyName: string;
-    public refreshRate = 0; // milliseconds, 0 for static content
+    public needsSetup = false; // shows settings when added
 
-    private id: Guid;
-
-    public className: string; // Needed so objects from LocalStorage can be cast to correct class
-    public title?: string;
-    public subTitle?: string;
-    public col: number;
-    public row: number;
-    public sizex: number; // # of columns wide
-    public sizey: number; // # of rows high
-    public defaultWidth = 1; // default for sizex
-    public defaultHeight = 1; // default for sizey
-    public backgroundColor = '#333333'; // Due to HTML input type color standards, use 6 character hexcolors
-    public textColor = '#ffffff'; // Due to HTML input type color standards, use 6 hexcharacter colors
-    public needsSetup = false; // Shows settings when added
-
+    protected refreshRate = 0; // milliseconds, 0 for static content
     protected timer: Timer;
     protected updating: boolean;
 
-    constructor(module?: BashBoardModule) {
-        // When modules are loaded from the LocalStorage, they are just objects and not BashBoardModules.
-        // They are injected to the BashBoardModule constructor to set values.
-        // Subclasses can override the constructor to set extra properties.
-        // Payload and classname should NOT be altered
-        if (module) {
-            this.id = module.id;
-            this.className = module.className;
-            this.title = module.title;
-            this.col = module.col;
-            this.row = module.row;
-            this.sizex = module.sizex;
-            this.sizey = module.sizey;
-            this.backgroundColor = module.backgroundColor;
-            this.textColor = module.textColor;
-            this.needsSetup = false;
-        } else {
-            this.generateNewGuid();
-            this.className = this.constructor.name;
-        }
-    }
+    @Input() protected config: ItemConfig;
+    @Input() public moduleChanged: EventEmitter<boolean> = new EventEmitter();
 
     abstract updateContent(): void;
 
+    public getConfig(): ItemConfig {
+        return this.config;
+    }
+
+    public setConfig(config: ItemConfig): void {
+        this.config = config;
+    }
+
+    public updateSettings(settings: Setting[]): void {
+        this.procesSettings(settings);
+        this.moduleChanged.emit(true);
+    }
+
     abstract getSettings(): Setting[];
 
-    abstract setDefaultSettings(): void;
+    public abstract setDefaultSettings(): void;
+
+    public getModuleType(): string {
+        return this.config.moduleType;
+    }
 
     public canUpdate(): boolean {
-        return !this.updating;
+        return !this.updating && this.refreshRate > 0;
     }
 
     public getId(): Guid {
-        return this.id;
+        return this.config.id;
     }
 
     public generateNewGuid(): void {
-        this.id = Guid.newGuid();
+        this.config.id = Guid.newGuid();
     }
 
     public setTimer(): void {
@@ -88,29 +74,24 @@ export abstract class BashBoardModule implements NgGridItemConfig {
     }
 
     public procesSettings(settings: Setting[]): void {
-        // Override in subclass to proces module specific attributes
-        // Do call this one with super.procesSettings in your implementation
+        // override in subclass to proces module specific attributes
+        // do call this one with super.procesSettings in your implementation
         this.needsSetup = false;
         for (let setting of settings) {
             switch (setting.name) {
                 case SettingNames.TITLE:
-                    if (this.title !== setting.value) {
-                        this.title = setting.value;
-                    }
-                    break;
-                case SettingNames.SUBTITLE:
-                    if (this.subTitle !== setting.value) {
-                        this.subTitle = setting.value;
+                    if (this.config.title !== setting.value) {
+                        this.config.title = setting.value;
                     }
                     break;
                 case SettingNames.BACKGROUNDCOLOR:
-                    if (this.backgroundColor !== setting.value) {
-                        this.backgroundColor = setting.value;
+                    if (this.config.backgroundColor !== setting.value) {
+                        this.config.backgroundColor = setting.value;
                     }
                     break;
                 case SettingNames.TEXTCOLOR:
-                    if (this.textColor !== setting.value) {
-                        this.textColor = setting.value;
+                    if (this.config.textColor !== setting.value) {
+                        this.config.textColor = setting.value;
                     }
                     break;
             }
@@ -119,16 +100,18 @@ export abstract class BashBoardModule implements NgGridItemConfig {
 
     protected getBasicSettings(): Setting[] {
         return [
-            new Setting(SettingNames.TITLE, this.title),
-            new Setting(SettingNames.BACKGROUNDCOLOR, this.backgroundColor, InputType.COLOR),
-            new Setting(SettingNames.TEXTCOLOR, this.textColor, InputType.COLOR)
+            new Setting(SettingNames.BACKGROUNDCOLOR, this.config.backgroundColor, InputType.COLOR),
+            new Setting(SettingNames.TEXTCOLOR, this.config.textColor, InputType.COLOR)
         ];
+    }
+
+    public setModuleType(): void {
+        this.config.moduleType = this.constructor.name;
     }
 }
 
 export enum SettingNames {
-    TITLE = 'Titel',
-    SUBTITLE = 'Ondertitel',
-    BACKGROUNDCOLOR = 'Achtergrondkleur',
-    TEXTCOLOR = 'Tekstkleur'
+    TITLE = "Titel",
+    BACKGROUNDCOLOR = "Achtergrondkleur",
+    TEXTCOLOR = "Tekstkleur"
 }

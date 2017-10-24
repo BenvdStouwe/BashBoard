@@ -1,0 +1,11 @@
+.time {
+    font-weight: bold;
+    text-align: center;
+    font-size: 2em;
+}
+
+.date {
+    bottom: 0px;
+    text-align: center;
+    font-size: 1.5em;
+}

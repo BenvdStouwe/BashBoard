@@ -1,18 +1,15 @@
-<div    [class.showBoard]='visible' class='step'
-        [ngGrid]='gridConfig' 
-        (onItemChange)='saveLayout()'>
-    <bashboard-module   *ngFor='let module of modules' 
-                        [module]='module'
-                        (moduleChanged)='saveLayout()'>
-    </bashboard-module>
-    <div id="menu">
-        <button (click)='addModule()' class='btn btn-default fa fa-puzzle-piece'>
-        </button>
-        <button class='btn btn-default fa fa-cogs'
-            data-toggle="modal" data-target="#bashboardSettings">
-        </button>
-    </div>
-    <bashboard-settings [gridConfig]='gridConfig'
-                        (settingsChanged)='saveGridConfig'>
-    </bashboard-settings>
+<div #bashBoard
+     class='step'
+     [class.showBoard]='visible'
+     [ngGrid]='gridConfig'>
+        <template #bashBoardModuleContainer></template>
+        <div id="menu">
+                <button (click)='addModule()'
+                        class='btn btn-default fa fa-puzzle-piece'>
+                </button>
+                <button class='btn btn-default fa fa-cogs'
+                        data-toggle="modal"
+                        data-target="#bashboardSettings">
+                </button>
+        </div>
 </div>

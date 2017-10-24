@@ -1,0 +1,9 @@
+<div [ngGridItem]='config'
+     [style.background-color]='config.backgroundColor'
+     [style.color]='config.textColor'>
+    <p class="time"
+       [innerHtml]="time | amDateFormat:config.timeFormat"></p>
+    <p class="date"
+       *ngIf="config.dateFormat"
+       [innerHtml]="time | amDateFormat:config.dateFormat"></p>
+</div>

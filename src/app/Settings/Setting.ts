@@ -1,4 +1,4 @@
-import { InputType, DetermineInputType } from '../Model/Utilities';
+import { DetermineInputType, InputType } from "../Model/Utilities";
 
 export class Setting {
     public name: string;

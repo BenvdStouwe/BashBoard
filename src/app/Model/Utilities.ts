@@ -1,8 +1,8 @@
 export class Guid {
     static newGuid(): Guid {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c: string): string {
             // tslint:disable-next-line:no-bitwise
-            let r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+            let r = Math.random() * 16 | 0, v = c === "x" ? r : (r & 0x3 | 0x8);
             return v.toString(16);
         });
     }
@@ -39,18 +39,18 @@ export class Timer {
 
 export function DetermineInputType(input: any): InputType {
     switch (typeof (input)) {
-        case 'string':
-            let hexColorRegex = new RegExp('^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$');
+        case "string":
+            let hexColorRegex = new RegExp("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$");
             if (hexColorRegex.test(input)) {
                 return InputType.COLOR;
             } else {
                 return InputType.STRING;
             }
-        case 'number':
+        case "number":
             return InputType.NUMBER;
-        case 'boolean':
+        case "boolean":
             return InputType.BOOLEAN;
-        case 'object':
+        case "object":
             if (input instanceof Date) {
                 return InputType.DATE;
             } else {
@@ -62,11 +62,11 @@ export function DetermineInputType(input: any): InputType {
 }
 
 export enum InputType {
-    STRING = 'text',
-    PASSWORD = 'password',
-    DATE = 'datetime-local',
-    COLOR = 'color',
-    BOOLEAN = 'checkbox',
-    NUMBER = 'number'
+    STRING = "text",
+    PASSWORD = "password",
+    DATE = "datetime-local",
+    COLOR = "color",
+    BOOLEAN = "checkbox",
+    NUMBER = "number"
 }
 

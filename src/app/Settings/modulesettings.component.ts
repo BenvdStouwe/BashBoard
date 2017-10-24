@@ -1,12 +1,13 @@
-import { Component, Input, OnInit, Output, EventEmitter, ElementRef } from '@angular/core';
-import { BashBoardModule } from '../Model/BashBoardModule';
-import { Setting } from './Setting';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { InputType } from '../Model/Utilities';
+import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+
+import { BashBoardModule } from "../Model/BashBoardModule";
+import { InputType } from "../Model/Utilities";
+import { Setting } from "./Setting";
 
 @Component({
-    selector: 'module-settings',
-    templateUrl: './modulesettings.view.html'
+    selector: "module-settings",
+    templateUrl: "./modulesettings.view.html"
 })
 
 export class ModuleSettingsComponent {
@@ -27,7 +28,6 @@ export class ModuleSettingsComponent {
         this.settings = this.module.getSettings();
         this.modalService.open(settings).result.then((result) => {
             this.settingsClosed.emit(this.settings);
-        }, (reason) => {
         });
     }
 
@@ -40,7 +40,7 @@ export class ModuleSettingsComponent {
     }
 
     public showUpdateButton(): boolean {
-        return this.module.refreshRate > 0;
+        return this.module.canUpdate();
     }
 
     public updating(): boolean {
@@ -55,7 +55,7 @@ export class ModuleSettingsComponent {
         return inputType === InputType.COLOR;
     }
 
-    public setDateToNow(value: Date) {
+    public setDateToNow(value: Date): void {
         value = new Date();
     }
 }
