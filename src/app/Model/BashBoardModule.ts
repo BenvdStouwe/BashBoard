@@ -8,40 +8,21 @@ export abstract class BashBoardModule {
     public readonly friendlyName: string;
     public needsSetup = false; // shows settings when added
 
-    private id: Guid;
     protected refreshRate = 0; // milliseconds, 0 for static content
-    protected config: ItemConfig;
     protected timer: Timer;
     protected updating: boolean;
 
+    @Input() protected config: ItemConfig;
     @Input() public moduleChanged: EventEmitter<boolean> = new EventEmitter();
-
-    constructor(config?: ItemConfig) {
-        // when modules are loaded from the LocalStorage, they are just objects and not BashBoardModules.
-        // they are injected to the BashBoardModule constructor to set values.
-        // subclasses can override the constructor to set extra properties.
-        // payload and classname should NOT be altered
-        if (config) {
-            this.config.id = config.id;
-            this.config.moduleType = config.moduleType;
-            this.config.title = config.title;
-            this.config.col = config.col;
-            this.config.row = config.row;
-            this.config.sizex = config.sizex;
-            this.config.sizey = config.sizey;
-            this.config.backgroundColor = config.backgroundColor;
-            this.config.textColor = config.textColor;
-            this.needsSetup = false;
-        } else {
-            this.generateNewGuid();
-            this.config.moduleType = this.constructor.name;
-        }
-    }
 
     abstract updateContent(): void;
 
     public getConfig(): ItemConfig {
         return this.config;
+    }
+
+    public setConfig(config: ItemConfig): void {
+        this.config = config;
     }
 
     public updateSettings(settings: Setting[]): void {
@@ -62,11 +43,11 @@ export abstract class BashBoardModule {
     }
 
     public getId(): Guid {
-        return this.id;
+        return this.config.id;
     }
 
     public generateNewGuid(): void {
-        this.id = Guid.newGuid();
+        this.config.id = Guid.newGuid();
     }
 
     public setTimer(): void {
@@ -119,10 +100,13 @@ export abstract class BashBoardModule {
 
     protected getBasicSettings(): Setting[] {
         return [
-            new Setting(SettingNames.TITLE, this.config.title),
             new Setting(SettingNames.BACKGROUNDCOLOR, this.config.backgroundColor, InputType.COLOR),
             new Setting(SettingNames.TEXTCOLOR, this.config.textColor, InputType.COLOR)
         ];
+    }
+
+    public setModuleType(): void {
+        this.config.moduleType = this.constructor.name;
     }
 }
 

@@ -1,10 +1,8 @@
-import { Directive, Input } from "@angular/core";
-
-import { BashBoardModule } from "../Model/BashBoardModule";
+import { Directive, ViewContainerRef } from "@angular/core";
 
 @Directive({
     selector: "bashboard-module"
 })
 export class BashBoardModuleDirective {
-    @Input() bashBoardModule: BashBoardModule;
+    constructor(public viewContainerRef: ViewContainerRef) { }
 }

@@ -1,29 +1,54 @@
-import { Component, ComponentFactoryResolver, OnInit, QueryList, ViewChildren } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { AfterViewInit, Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef } from "@angular/core";
+import * as moment from "moment";
 
 import { BashBoardModule } from "./Model/BashBoardModule";
 import { GridConfig } from "./Model/GridConfig";
-import { BashBoardModuleDirective } from "./Modules/bashboard-module.directive";
 import { BashBoardModulesService } from "./Modules/bashboard-modules.service";
+import { KlokModuleComponent } from "./Modules/Klok/klokmodule.component";
 import { Modules } from "./Modules/Modules";
 
 @Component({
   selector: "bashboard",
-  templateUrl: "./bashboard.view.html",
+  templateUrl: "./bashboard.view.html"
 })
-export class BashBoardComponent implements OnInit {
-  @ViewChildren(BashBoardModuleDirective) bashBoardModules: QueryList<BashBoardModuleDirective>;
+export class BashBoardComponent implements OnInit, AfterViewInit {
+  @ViewChild("bashBoard", { read: ViewContainerRef }) bashBoard: ViewContainerRef;
+  @ViewChild("bashBoardModuleContainer", { read: ViewContainerRef }) bashBoardModuleContainer: ViewContainerRef;
   public visible = false;
   public modules: BashBoardModule[];
   public gridConfig: GridConfig;
 
-  constructor(private modulesService: BashBoardModulesService, private componentFactoryResolver: ComponentFactoryResolver) { }
+  constructor(
+    private http: HttpClient,
+    private modulesService: BashBoardModulesService,
+    private componentFactoryResolver: ComponentFactoryResolver
+  ) { }
 
   ngOnInit(): void {
-    this.modules = this.getModules();
-    this.addModules(this.modules);
     this.gridConfig = this.getDefaultGridConfig();
     this.setStyleSettings();
-    setTimeout(() => this.visible = true, 1);
+    this.visible = true;
+
+    moment.locale("nl-nl");
+  }
+
+  ngAfterViewInit(): void {
+    this.restoreModules();
+  }
+
+  public get bashBoardModules(): BashBoardModule[] {
+    // return this.bashBoardModuleContainer.;
+    return [];
+  }
+
+  public restoreModules(): void {
+    const configs = this.modulesService.getConfigs();
+    configs.forEach(config => {
+      let moduleComponentFactory = this.componentFactoryResolver.resolveComponentFactory(KlokModuleComponent);
+      let component = this.bashBoardModuleContainer.createComponent(moduleComponentFactory);
+      (<BashBoardModule>component.instance).setConfig(config);
+    });
   }
 
   public addModules(modules: BashBoardModule[]): void {
@@ -45,13 +70,13 @@ export class BashBoardComponent implements OnInit {
   }
 
   public setStyleSettings(): void {
-    let bodyElement = document.querySelector("body");
+    const bodyElement = document.querySelector("body");
     bodyElement.style.setProperty(StyleSettingNames.BACKGROUNDCOLOR, this.gridConfig.background_color);
     bodyElement.style.setProperty(StyleSettingNames.BORDERWIDTH, this.gridConfig.border_width + "px");
   }
 
   public saveLayout(): void {
-    this.modulesService.setModules(this.modules);
+    this.modulesService.saveModules(this.modules);
   }
 
   private getModules(): BashBoardModule[] {

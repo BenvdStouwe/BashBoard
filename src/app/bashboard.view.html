@@ -1,9 +1,8 @@
-<div class='step'
+<div #bashBoard
+     class='step'
      [class.showBoard]='visible'
-     [ngGrid]='gridConfig'
-     (onItemChange)='saveLayout()'>
-        <ng-template bashboard-module>
-        </ng-template>
+     [ngGrid]='gridConfig'>
+        <template #bashBoardModuleContainer></template>
         <div id="menu">
                 <button (click)='addModule()'
                         class='btn btn-default fa fa-puzzle-piece'>
@@ -13,7 +12,4 @@
                         data-target="#bashboardSettings">
                 </button>
         </div>
-        <bashboard-settings [gridConfig]='gridConfig'
-                            (settingsChanged)='saveGridConfig'>
-        </bashboard-settings>
 </div>

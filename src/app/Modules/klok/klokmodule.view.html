@@ -1,11 +1,9 @@
-<div [ngGridItem]='module'
-     [style.background-color]='module.backgroundColor'
-     [style.color]='module.textColor'
-     (onChangeStart)='module.pauseTimer()'
-     (onChangeStop)='module.resumeTimer()'>
-    <h2 [innerHtml]='time'></h2>
-
-    <module-settings [module]='module'
-                     (settingsClosed)='updateSettings($event)'>
-    </module-settings>
+<div [ngGridItem]='config'
+     [style.background-color]='config.backgroundColor'
+     [style.color]='config.textColor'>
+    <p class="time"
+       [innerHtml]="time | amDateFormat:config.timeFormat"></p>
+    <p class="date"
+       *ngIf="config.dateFormat"
+       [innerHtml]="time | amDateFormat:config.dateFormat"></p>
 </div>

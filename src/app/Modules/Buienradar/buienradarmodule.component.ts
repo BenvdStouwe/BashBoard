@@ -1,7 +1,6 @@
 import { Component } from "@angular/core";
 
 import { BashBoardModule, SettingNames } from "../../Model/BashBoardModule";
-import { ItemConfig } from "../../Model/ItemConfig";
 import { Setting } from "../../Settings/Setting";
 
 @Component({
@@ -9,13 +8,6 @@ import { Setting } from "../../Settings/Setting";
 })
 export class BuienradarModuleComponent extends BashBoardModule {
     public readonly friendlyName = "Buienradar";
-
-    constructor(config?: ItemConfig) {
-        super(config);
-        if (!config) {
-            this.setDefaultSettings();
-        }
-    }
 
     public updateContent(): void {
         return;

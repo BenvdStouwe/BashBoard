@@ -1,30 +1,23 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 
 import { BashBoardModule, SettingNames } from "../../Model/BashBoardModule";
 import { Setting } from "../../Settings/Setting";
 import { KlokModuleConfig } from "./klokmodule.config";
 
 @Component({
-    templateUrl: "./KlokModule.view.html"
+    templateUrl: "./KlokModule.view.html",
+    styleUrls: ["./klokmodule.style.css"]
 })
 export class KlokModuleComponent extends BashBoardModule implements OnInit {
     public readonly friendlyName = "Klok";
+    @Input() protected config: KlokModuleConfig;
     protected refreshRate = 1000;
-    protected config: KlokModuleConfig;
 
     private time: Date = new Date();
 
-    constructor(config?: KlokModuleConfig) {
-        super(config);
-        if (!config) {
-            this.setDefaultSettings();
-        } else {
-            this.config.showDate = config.showDate;
-            this.config.showSeconds = config.showSeconds;
-        }
-    }
-
     ngOnInit(): void {
+        this.config = new KlokModuleConfig();
+        this.setDefaultSettings();
         this.updateContent();
     }
 
@@ -36,12 +29,15 @@ export class KlokModuleComponent extends BashBoardModule implements OnInit {
         super.setTimer();
     }
 
+    public setConfig(config: KlokModuleConfig): void {
+        super.setConfig(config);
+    }
+
     public setDefaultSettings(): void {
-        this.config.title = "Klok";
         this.config.backgroundColor = "#1d64d6";
         this.config.textColor = "#ffffff";
-        this.config.showDate = true;
-        this.config.showSeconds = false;
+        this.config.timeFormat = "H:mm:ss";
+        this.config.dateFormat = "dddd D MMMM";
         this.config.defaultHeight = 1;
     }
 
@@ -49,29 +45,27 @@ export class KlokModuleComponent extends BashBoardModule implements OnInit {
         super.procesSettings(settings);
         for (let setting of settings) {
             switch (setting.name) {
-                case KlokSettingsNames.SHOWDATE:
-                    this.config.showDate = setting.value;
+                case KlokSettingsNames.DATEFORMAT:
+                    this.config.dateFormat = setting.value;
                     break;
-                case KlokSettingsNames.SHOWSECONDS:
-                    this.config.showSeconds = setting.value;
-                    break;
+                case KlokSettingsNames.TIMEFORMAT:
+                    this.config.timeFormat = setting.value;
             }
         }
     }
 
     public getSettings(): Setting[] {
         return [
-            new Setting(SettingNames.TITLE, this.config.title),
             new Setting(SettingNames.BACKGROUNDCOLOR, this.config.backgroundColor),
             new Setting(SettingNames.TEXTCOLOR, this.config.textColor),
 
-            new Setting(KlokSettingsNames.SHOWDATE, this.config.showDate),
-            new Setting(KlokSettingsNames.SHOWSECONDS, this.config.showSeconds)
+            new Setting(KlokSettingsNames.DATEFORMAT, this.config.dateFormat),
+            new Setting(KlokSettingsNames.TIMEFORMAT, this.config.timeFormat)
         ];
     }
 }
 
 enum KlokSettingsNames {
-    SHOWDATE = "Toon datum",
-    SHOWSECONDS = "Toon seconden"
+    TIMEFORMAT = "Tijd weergave",
+    DATEFORMAT = "Datum weergave"
 }
