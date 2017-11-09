@@ -1,11 +1,22 @@
 import { HttpClient } from "@angular/common/http";
-import { AfterViewInit, Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef } from "@angular/core";
+import {
+    AfterViewInit,
+    Component,
+    ComponentFactoryResolver,
+    OnInit,
+    QueryList,
+    ViewChild,
+    ViewChildren,
+    ViewContainerRef,
+} from "@angular/core";
 import * as moment from "moment";
 
 import { BashBoardModule } from "./Model/BashBoardModule";
 import { GridConfig } from "./Model/GridConfig";
+import { ItemConfig } from "./Model/ItemConfig";
+import { BashBoardModuleDirective } from "./Modules/bashboard-module.directive";
 import { BashBoardModulesService } from "./Modules/bashboard-modules.service";
-import { KlokModuleComponent } from "./Modules/Klok/klokmodule.component";
+import { KlokModuleConfig } from "./Modules/Klok/klokmodule.config";
 import { Modules } from "./Modules/Modules";
 
 @Component({
@@ -13,10 +24,10 @@ import { Modules } from "./Modules/Modules";
   templateUrl: "./bashboard.view.html"
 })
 export class BashBoardComponent implements OnInit, AfterViewInit {
-  @ViewChild("bashBoard", { read: ViewContainerRef }) bashBoard: ViewContainerRef;
   @ViewChild("bashBoardModuleContainer", { read: ViewContainerRef }) bashBoardModuleContainer: ViewContainerRef;
+  @ViewChildren(BashBoardModuleDirective) bashBoardModuleDirectives: QueryList<BashBoardModule>;
   public visible = false;
-  public modules: BashBoardModule[];
+  public configs: ItemConfig[];
   public gridConfig: GridConfig;
 
   constructor(
@@ -37,36 +48,35 @@ export class BashBoardComponent implements OnInit, AfterViewInit {
     this.restoreModules();
   }
 
-  public get bashBoardModules(): BashBoardModule[] {
-    // return this.bashBoardModuleContainer.;
-    return [];
-  }
-
   public restoreModules(): void {
     const configs = this.modulesService.getConfigs();
-    configs.forEach(config => {
-      let moduleComponentFactory = this.componentFactoryResolver.resolveComponentFactory(KlokModuleComponent);
-      let component = this.bashBoardModuleContainer.createComponent(moduleComponentFactory);
-      (<BashBoardModule>component.instance).setConfig(config);
-    });
-  }
-
-  public addModules(modules: BashBoardModule[]): void {
-    modules.forEach(module => this.addModule(module));
-  }
-
-  public addModule(module: BashBoardModule): void {
-    module = new Modules.KlokModuleComponent();
-
-    while (this.modules.some(m => m.getId() === module.getId())) {
-      module.generateNewGuid();
+    this.configs = configs ? configs : [];
+    if (this.configs.length > 0) {
+      this.configs.forEach(config => {
+        let moduleComponentFactory = this.componentFactoryResolver.resolveComponentFactory(Modules[config.moduleType]);
+        this.bashBoardModuleContainer.createComponent(moduleComponentFactory);
+        // (<BashBoardModule>component.instance).setConfig(config);
+      });
+    } else {
+      const module = new Modules.KlokModuleComponent();
+      this.configs.push(module.getConfig());
+      let moduleComponentFactory = this.componentFactoryResolver.resolveComponentFactory(Modules[module.getConfig().moduleType]);
+      this.bashBoardModuleContainer.createComponent(moduleComponentFactory);
     }
-
-    this.modules.push(module);
   }
 
-  public removeModule(module: BashBoardModule): void {
-    this.modules = this.modules.filter(m => m !== module);
+  public addModules(configs: ItemConfig[]): void {
+    configs.forEach(config => this.addModule(config));
+  }
+
+  public addModule(config: ItemConfig): void {
+    config = new KlokModuleConfig();
+
+    this.configs.push(config);
+  }
+
+  public removeModule(config: ItemConfig): void {
+    this.configs = this.configs.filter(m => m !== config);
   }
 
   public setStyleSettings(): void {
@@ -76,11 +86,12 @@ export class BashBoardComponent implements OnInit, AfterViewInit {
   }
 
   public saveLayout(): void {
-    this.modulesService.saveModules(this.modules);
+    this.modulesService.saveConfigs(this.configs);
   }
 
   private getModules(): BashBoardModule[] {
-    return this.modulesService.getModules();
+    return [];
+    // return this.modulesService.getModules();
   }
 
   // private saveGridConfig(): void {

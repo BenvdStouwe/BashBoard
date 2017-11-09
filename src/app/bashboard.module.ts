@@ -10,9 +10,7 @@ import { Ng2Webstorage } from "ngx-webstorage";
 import { BashBoardComponent } from "./bashboard.component";
 import { BashBoardModuleDirective } from "./Modules/bashboard-module.directive";
 import { BashBoardModulesService } from "./Modules/bashboard-modules.service";
-import { BuienradarModuleComponent } from "./Modules/Buienradar/buienradarmodule.component";
-import { KlokModuleComponent } from "./Modules/Klok/klokmodule.component";
-import { OVModuleComponent } from "./Modules/OV/ovmodule.component";
+import { Modules } from "./Modules/Modules";
 import { BashboardSettingsComponent } from "./Settings/bashboardsettings.component";
 import { ModuleSettingsComponent } from "./Settings/modulesettings.component";
 
@@ -37,17 +35,20 @@ import { ModuleSettingsComponent } from "./Settings/modulesettings.component";
     //#endregion
 
     // #region Modules
-    BuienradarModuleComponent,
-    KlokModuleComponent,
-    OVModuleComponent
+    Modules.BuienradarModuleComponent,
+    Modules.JenkinsModuleComponent,
+    Modules.KlokModuleComponent,
+    Modules.OVModuleComponent
     // #endregion
   ],
   providers: [
     BashBoardModulesService
   ],
   entryComponents: [
-    BuienradarModuleComponent,
-    KlokModuleComponent
+    Modules.BuienradarModuleComponent,
+    Modules.JenkinsModuleComponent,
+    Modules.KlokModuleComponent,
+    Modules.OVModuleComponent
   ],
   bootstrap: [BashBoardComponent]
 })

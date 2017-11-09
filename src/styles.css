@@ -1,6 +1,7 @@
 body {
   --background-color: #000;
   --border-width: 1px;
+  --font-size: 15px;
   background-color: #000; /* Thanks IE */
   background-color: var(--background-color);
 }

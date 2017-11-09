@@ -10,8 +10,16 @@ export class ItemConfig implements NgGridItemConfig {
     public row: number;
     public sizex: number; // # of columns wide
     public sizey: number; // # of rows high
-    public defaultWidth = 1; // default for sizex
-    public defaultHeight = 1; // default for sizey
-    public backgroundColor = "#333333"; // due to HTML input type color standards, use 6 character hexcolors
-    public textColor = "#ffffff"; // due to HTML input type color standards, use 6 hexcharacter colors
+
+    // due to HTML input type color standards, use 7 character string with hexcolor
+    // css color strings like 'red' or 'blue'  will work, but will throw an error when opening them in a settingsmodal
+    // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/color
+    public backgroundColor = "#333333";
+    public textColor = "#ffffff";
+
+    constructor() {
+        if (!this.id) {
+            this.id = Guid.newGuid();
+        }
+    }
 }

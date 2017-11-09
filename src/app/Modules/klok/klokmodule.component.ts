@@ -5,7 +5,7 @@ import { Setting } from "../../Settings/Setting";
 import { KlokModuleConfig } from "./klokmodule.config";
 
 @Component({
-    templateUrl: "./KlokModule.view.html",
+    templateUrl: "./klokmodule.view.html",
     styleUrls: ["./klokmodule.style.css"]
 })
 export class KlokModuleComponent extends BashBoardModule implements OnInit {
@@ -16,8 +16,6 @@ export class KlokModuleComponent extends BashBoardModule implements OnInit {
     private time: Date = new Date();
 
     ngOnInit(): void {
-        this.config = new KlokModuleConfig();
-        this.setDefaultSettings();
         this.updateContent();
     }
 
@@ -34,11 +32,15 @@ export class KlokModuleComponent extends BashBoardModule implements OnInit {
     }
 
     public setDefaultSettings(): void {
-        this.config.backgroundColor = "#1d64d6";
+        if (!this.config) {
+            this.config = new KlokModuleConfig();
+        }
+        super.setDefaultSettings();
+        this.config.backgroundColor = "#0000ff";
         this.config.textColor = "#ffffff";
         this.config.timeFormat = "H:mm:ss";
         this.config.dateFormat = "dddd D MMMM";
-        this.config.defaultHeight = 1;
+        this.config.sizex = 2;
     }
 
     public procesSettings(settings: Setting[]): void {
