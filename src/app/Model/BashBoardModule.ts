@@ -15,6 +15,14 @@ export abstract class BashBoardModule {
     @Input() protected config: ItemConfig;
     @Input() public moduleChanged: EventEmitter<boolean> = new EventEmitter();
 
+    constructor(config?: ItemConfig) {
+        if (config) {
+            this.config = config;
+        } else {
+            this.setDefaultSettings();
+        }
+    }
+
     abstract updateContent(): void;
 
     public getConfig(): ItemConfig {
@@ -30,9 +38,11 @@ export abstract class BashBoardModule {
         this.moduleChanged.emit(true);
     }
 
-    abstract getSettings(): Setting[];
+    public abstract getSettings(): Setting[];
 
-    public abstract setDefaultSettings(): void;
+    public setDefaultSettings(): void {
+        this.config.moduleType = this.constructor.name;
+    }
 
     public getModuleType(): string {
         return this.config.moduleType;

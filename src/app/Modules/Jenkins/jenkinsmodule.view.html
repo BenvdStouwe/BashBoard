@@ -1,0 +1,15 @@
+<div [ngGridItem]='config'
+     [style.background-color]='config.backgroundColor'
+     [style.color]='config.textColor'>
+    <ng-container *ngFor="let job of jobs">
+        <p *ngIf="includeJob(job)"
+           [class]="job.status">
+            <a [href]="job.url.href"
+               [innerHtml]="job.naam"
+               target="_blank">
+            </a>
+            <i *ngIf="job.building"
+               class="fa fa-clock-o pull-right"></i>
+        </p>
+    </ng-container>
+</div>

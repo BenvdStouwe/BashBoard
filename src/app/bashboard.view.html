@@ -1,13 +1,20 @@
 <div #bashBoard
      class='step'
      [class.showBoard]='visible'
-     [ngGrid]='gridConfig'>
-        <template #bashBoardModuleContainer></template>
+     [ngGrid]='gridConfig'
+     (onItemChange)="saveLayout()">
+        <ng-template #bashBoardModuleContainer></ng-template>
         <div id="menu">
-                <button (click)='addModule()'
+                <button title="Voeg module toe"
+                        (click)='addModule()'
                         class='btn btn-default fa fa-puzzle-piece'>
                 </button>
-                <button class='btn btn-default fa fa-cogs'
+                <button title="Ververs alle modules"
+                        (click)='refreshAll()'
+                        class='btn btn-default fa fa-refresh'>
+                </button>
+                <button title="Instellingen"
+                        class='btn btn-default fa fa-cogs'
                         data-toggle="modal"
                         data-target="#bashboardSettings">
                 </button>
