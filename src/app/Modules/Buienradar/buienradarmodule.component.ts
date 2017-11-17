@@ -18,7 +18,7 @@ export class BuienradarModuleComponent extends BashBoardModule {
     }
 
     public getSettings(): Setting[] {
-        let settings = [
+        const settings = [
             new Setting(SettingNames.TITLE, this.config.title),
             new Setting(SettingNames.BACKGROUNDCOLOR, this.config.backgroundColor)
         ];

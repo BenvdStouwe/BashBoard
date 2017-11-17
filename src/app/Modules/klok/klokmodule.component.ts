@@ -10,12 +10,13 @@ import { KlokModuleConfig } from "./klokmodule.config";
 })
 export class KlokModuleComponent extends BashBoardModule implements OnInit {
     public readonly friendlyName = "Klok";
-    @Input() protected config: KlokModuleConfig;
+    @Input() public config: KlokModuleConfig;
     protected refreshRate = 1000;
 
     private time: Date = new Date();
 
     ngOnInit(): void {
+        super.ngOnInit();
         this.updateContent();
     }
 
@@ -45,7 +46,7 @@ export class KlokModuleComponent extends BashBoardModule implements OnInit {
 
     public procesSettings(settings: Setting[]): void {
         super.procesSettings(settings);
-        for (let setting of settings) {
+        for (const setting of settings) {
             switch (setting.name) {
                 case KlokSettingsNames.DATEFORMAT:
                     this.config.dateFormat = setting.value;

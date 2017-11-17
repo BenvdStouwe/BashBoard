@@ -1,12 +1,13 @@
-import { Component, OnInit, Input, EventEmitter, Output } from "@angular/core";
-import { GridConfig } from "../Model/GridConfig";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { selector } from "rxjs/operator/publish";
+
+import { GridConfig } from "../Model/GridConfig";
 
 @Component({
-    selector: "bashboard-settings",
+    selector: "app-bashboard-settings",
     templateUrl: "./bashboardsettings.view.html"
 })
-
 export class BashboardSettingsComponent {
     @Input() gridConfig: GridConfig;
 

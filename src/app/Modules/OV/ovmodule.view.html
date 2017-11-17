@@ -6,7 +6,7 @@
     <h2 *ngIf='title'
         [innerHtml]='title'></h2>
 
-    <module-settings [module]='module'
-                     (settingsClosed)='updateSettings($event)'>
-    </module-settings>
+    <app-module-settings [module]='module'
+                         (settingsClosed)='updateSettings($event)'>
+    </app-module-settings>
 </div>

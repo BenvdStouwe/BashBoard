@@ -1,10 +1,11 @@
 import { HttpClient } from "@angular/common/http";
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 
 import { BashBoardModule } from "../../Model/BashBoardModule";
 import { Setting } from "../../Settings/Setting";
 import { JenkinsModuleConfig } from "./jenkinsmodule.config";
 import { JenkinsApiResponse, JobInfo, JobStatus } from "./JobInfo";
+
 
 @Component({
     templateUrl: "./jenkinsmodule.view.html",
@@ -12,12 +13,13 @@ import { JenkinsApiResponse, JobInfo, JobStatus } from "./JobInfo";
 })
 export class JenkinsModuleComponent extends BashBoardModule implements OnInit {
     protected refreshRate = 20000;
-    protected config: JenkinsModuleConfig;
+    @Input() public config: JenkinsModuleConfig;
     private jobs: JobInfo[];
 
     constructor(private http: HttpClient) { super(); }
 
     ngOnInit(): void {
+        super.ngOnInit();
         this.setDefaultSettings();
         this.updateContent();
     }

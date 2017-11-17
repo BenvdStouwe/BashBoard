@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { BashBoardModule } from "../Model/BashBoardModule";
@@ -6,11 +6,11 @@ import { InputType } from "../Model/Utilities";
 import { Setting } from "./Setting";
 
 @Component({
-    selector: "module-settings",
+    selector: "app-module-settings",
     templateUrl: "./modulesettings.view.html"
 })
 
-export class ModuleSettingsComponent {
+export class ModuleSettingsComponent implements OnInit {
     private settings: Setting[];
 
     @Input() public module: BashBoardModule;

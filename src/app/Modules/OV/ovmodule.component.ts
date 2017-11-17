@@ -1,5 +1,5 @@
-import { Component } from "@angular/core";
-import { Http } from "@angular/http";
+import { HttpClient } from "@angular/common/http";
+import { Component, Input, OnInit } from "@angular/core";
 
 import { BashBoardModule, SettingNames } from "./../../Model/BashBoardModule";
 import { InputType } from "./../../Model/Utilities";
@@ -10,15 +10,18 @@ import { OVModuleConfig } from "./ovmodule.config";
 @Component({
     templateUrl: "./ovmodule.view.html"
 })
-export class OVModuleComponent extends BashBoardModule {
+export class OVModuleComponent extends BashBoardModule implements OnInit {
     public readonly friendlyName = "Reisinformatie";
     public readonly refreshRate = 120000;
-    protected config: OVModuleConfig;
+    @Input() public config: OVModuleConfig;
 
     public warnings: OVMelding[];
 
-    constructor(private http: Http) {
-        super();
+    constructor(private http: HttpClient) { super(); }
+
+    ngOnInit(): void {
+        super.ngOnInit();
+        this.updateContent();
     }
 
     public updateContent(): void {
@@ -30,7 +33,7 @@ export class OVModuleComponent extends BashBoardModule {
             return;
         }
         this.updating = true;
-        let warnings = this.getNSTrainTimes();
+        const warnings = this.getNSTrainTimes();
         this.warnings = warnings;
         super.setTimer();
         this.updating = false;
@@ -62,7 +65,7 @@ export class OVModuleComponent extends BashBoardModule {
     public procesSettings(settings: Setting[]): void {
         let updateContent = false;
         super.procesSettings(settings);
-        for (let setting of settings) {
+        for (const setting of settings) {
             switch (setting.name) {
                 case OVSettingNames.STATION:
                     if (this.config.station !== setting.value) {
@@ -87,6 +90,7 @@ export class OVModuleComponent extends BashBoardModule {
                         this.config.username = setting.value;
                         updateContent = true;
                     }
+                    break;
                 case OVSettingNames.NSPASSWORD:
                     if (setting.value) {
                         // this.storeAuthentication(this.config.username, setting.value);
@@ -103,17 +107,13 @@ export class OVModuleComponent extends BashBoardModule {
     }
 
     private getNSTrainTimes(): OVMelding[] {
-        let url = "https://webservices.ns.nl/ns-api-avt?station=" + this.config.station;
-        let headers = new Headers();
-        let result = this.http.get(url).subscribe(data => {
+        const url = "https://webservices.ns.nl/ns-api-avt?station=" + this.config.station;
+        const headers = new Headers();
+        const result = this.http.get(url).subscribe(data => {
             console.log(data);
         });
         return new Array<OVMelding>();
     }
-
-    // private storeAuthentication(username: string, password: string): void {
-    //     this.storage.store(OVStorageNames.NSAUTHENTICATION, "jemoeder");
-    // }
 }
 
 enum OVSettingNames {

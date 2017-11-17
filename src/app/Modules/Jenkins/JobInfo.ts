@@ -25,13 +25,16 @@ export class JobInfo {
 }
 
 export enum JobStatus {
+    // normale statussen
     GESLAAGD = "blue",
-    GESLAAGD_EN_BOUWT = "blue_anime",
     GEFAALD = "red",
-    GEFAALD_EN_BOUWT = "red_anime",
     AFGELAST = "aborted",
-    AFGELAST_EN_BOUWT = "aborted_anime",
     INSTABIEL = "yellow",
+
+    // bouwstatussen
+    GESLAAGD_EN_BOUWT = "blue_anime",
+    GEFAALD_EN_BOUWT = "red_anime",
+    AFGELAST_EN_BOUWT = "aborted_anime",
     INSTABIEL_EN_BOUWT = "yellow_anime"
 }
 

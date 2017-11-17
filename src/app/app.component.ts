@@ -20,10 +20,11 @@ import { KlokModuleConfig } from "./Modules/Klok/klokmodule.config";
 import { Modules } from "./Modules/Modules";
 
 @Component({
-  selector: "bashboard",
-  templateUrl: "./bashboard.view.html"
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.css"]
 })
-export class BashBoardComponent implements OnInit, AfterViewInit {
+export class AppComponent implements OnInit, AfterViewInit {
   @ViewChild("bashBoardModuleContainer", { read: ViewContainerRef }) bashBoardModuleContainer: ViewContainerRef;
   @ViewChildren(BashBoardModuleDirective) bashBoardModuleDirectives: QueryList<BashBoardModule>;
   public visible = false;
@@ -53,15 +54,17 @@ export class BashBoardComponent implements OnInit, AfterViewInit {
     this.configs = configs ? configs : [];
     if (this.configs.length > 0) {
       this.configs.forEach(config => {
-        let moduleComponentFactory = this.componentFactoryResolver.resolveComponentFactory(Modules[config.moduleType]);
-        this.bashBoardModuleContainer.createComponent(moduleComponentFactory);
-        // (<BashBoardModule>component.instance).setConfig(config);
+        const moduleComponentFactory = this.componentFactoryResolver.resolveComponentFactory(Modules[config.moduleType]);
+        const component = this.bashBoardModuleContainer.createComponent(moduleComponentFactory);
+        (<BashBoardModule>component.instance).config = config;
       });
     } else {
       const module = new Modules.KlokModuleComponent();
+      module.setDefaultSettings();
       this.configs.push(module.getConfig());
-      let moduleComponentFactory = this.componentFactoryResolver.resolveComponentFactory(Modules[module.getConfig().moduleType]);
-      this.bashBoardModuleContainer.createComponent(moduleComponentFactory);
+      const moduleComponentFactory = this.componentFactoryResolver.resolveComponentFactory(Modules[module.getConfig().moduleType]);
+      const component = this.bashBoardModuleContainer.createComponent(moduleComponentFactory);
+      (<BashBoardModule>component.instance).config = module.getConfig();
     }
   }
 
@@ -88,20 +91,6 @@ export class BashBoardComponent implements OnInit, AfterViewInit {
   public saveLayout(): void {
     this.modulesService.saveConfigs(this.configs);
   }
-
-  private getModules(): BashBoardModule[] {
-    return [];
-    // return this.modulesService.getModules();
-  }
-
-  // private saveGridConfig(): void {
-  //   this.storage.store(StorageNames.GRIDCONFIG, this.gridConfig);
-  // }
-
-  // private getGridConfig(): GridConfig {
-  //   let gridConfig = this.storage.retrieve(StorageNames.GRIDCONFIG);
-  //   return gridConfig ? gridConfig : this.getDefaultGridConfig();
-  // }
 
   private getDefaultGridConfig(): GridConfig {
     return new GridConfig();

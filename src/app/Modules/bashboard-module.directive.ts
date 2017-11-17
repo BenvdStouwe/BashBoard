@@ -1,7 +1,7 @@
 import { Directive, ViewContainerRef } from "@angular/core";
 
 @Directive({
-    selector: "bashboard-module"
+    selector: "[appBashboardModule]"
 })
 export class BashBoardModuleDirective {
     constructor(public viewContainerRef: ViewContainerRef) { }

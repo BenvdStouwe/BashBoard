@@ -1,10 +1,10 @@
-import { EventEmitter, Input } from "@angular/core";
+import { EventEmitter, Input, OnInit } from "@angular/core";
 
 import { Setting } from "../Settings/Setting";
 import { ItemConfig } from "./ItemConfig";
 import { Guid, InputType, Timer } from "./Utilities";
 
-export abstract class BashBoardModule {
+export abstract class BashBoardModule implements OnInit {
     public readonly friendlyName: string;
     public needsSetup = false; // shows settings when added
 
@@ -12,13 +12,11 @@ export abstract class BashBoardModule {
     protected timer: Timer;
     protected updating: boolean;
 
-    @Input() protected config: ItemConfig;
+    @Input() public config: ItemConfig;
     @Input() public moduleChanged: EventEmitter<boolean> = new EventEmitter();
 
-    constructor(config?: ItemConfig) {
-        if (config) {
-            this.config = config;
-        } else {
+    ngOnInit(): void {
+        if (!this.config) {
             this.setDefaultSettings();
         }
     }
@@ -87,7 +85,7 @@ export abstract class BashBoardModule {
         // override in subclass to proces module specific attributes
         // do call this one with super.procesSettings in your implementation
         this.needsSetup = false;
-        for (let setting of settings) {
+        for (const setting of settings) {
             switch (setting.name) {
                 case SettingNames.TITLE:
                     if (this.config.title !== setting.value) {
