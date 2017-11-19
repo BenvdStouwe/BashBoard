@@ -10,9 +10,12 @@ import { Ng2Webstorage } from "ngx-webstorage/dist/app";
 import { AppComponent } from "./app.component";
 import { BashBoardModuleDirective } from "./Modules/bashboard-module.directive";
 import { BashBoardModulesService } from "./Modules/bashboard-modules.service";
-import { Modules } from "./Modules/Modules";
 import { BashboardSettingsComponent } from "./Settings/bashboardsettings.component";
 import { ModuleSettingsComponent } from "./Settings/modulesettings.component";
+import { OVModuleComponent } from "./Modules/OV/ovmodule.component";
+import { KlokModuleComponent } from "./Modules/Klok/klokmodule.component";
+import { JenkinsModuleComponent } from "./Modules/Jenkins/jenkinsmodule.component";
+import { BuienradarModuleComponent } from "./Modules/Buienradar/buienradarmodule.component";
 
 @NgModule({
   declarations: [
@@ -22,10 +25,10 @@ import { ModuleSettingsComponent } from "./Settings/modulesettings.component";
     ModuleSettingsComponent,
 
     // #region Modules
-    Modules.BuienradarModuleComponent,
-    Modules.JenkinsModuleComponent,
-    Modules.KlokModuleComponent,
-    Modules.OVModuleComponent
+    BuienradarModuleComponent,
+    JenkinsModuleComponent,
+    KlokModuleComponent,
+    OVModuleComponent
     // #endregion
   ],
   imports: [
@@ -41,10 +44,15 @@ import { ModuleSettingsComponent } from "./Settings/modulesettings.component";
     BashBoardModulesService
   ],
   entryComponents: [
-    Modules.BuienradarModuleComponent,
-    Modules.JenkinsModuleComponent,
-    Modules.KlokModuleComponent,
-    Modules.OVModuleComponent
+    // All BashBoardModules should be inserted here
+    // This is so they can be dynamically inserted with the ComponentFactoryResolver
+    // Modules not listed here cannot be added to the grid
+
+    // Don't forget to also add them to Modules.ts
+    BuienradarModuleComponent,
+    JenkinsModuleComponent,
+    KlokModuleComponent,
+    OVModuleComponent
   ],
   bootstrap: [AppComponent]
 })

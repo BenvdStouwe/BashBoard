@@ -16,9 +16,6 @@ export abstract class BashBoardModule implements OnInit {
     @Input() public moduleChanged: EventEmitter<boolean> = new EventEmitter();
 
     ngOnInit(): void {
-        if (!this.config) {
-            this.setDefaultSettings();
-        }
     }
 
     abstract updateContent(): void;
@@ -37,10 +34,6 @@ export abstract class BashBoardModule implements OnInit {
     }
 
     public abstract getSettings(): Setting[];
-
-    public setDefaultSettings(): void {
-        this.config.moduleType = this.constructor.name;
-    }
 
     public getModuleType(): string {
         return this.config.moduleType;

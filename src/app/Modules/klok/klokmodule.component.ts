@@ -36,12 +36,6 @@ export class KlokModuleComponent extends BashBoardModule implements OnInit {
         if (!this.config) {
             this.config = new KlokModuleConfig();
         }
-        super.setDefaultSettings();
-        this.config.backgroundColor = "#0000ff";
-        this.config.textColor = "#ffffff";
-        this.config.timeFormat = "H:mm:ss";
-        this.config.dateFormat = "dddd D MMMM";
-        this.config.sizex = 2;
     }
 
     public procesSettings(settings: Setting[]): void {

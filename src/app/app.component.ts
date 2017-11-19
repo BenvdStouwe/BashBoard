@@ -59,12 +59,11 @@ export class AppComponent implements OnInit, AfterViewInit {
         (<BashBoardModule>component.instance).config = config;
       });
     } else {
-      const module = new Modules.KlokModuleComponent();
-      module.setDefaultSettings();
-      this.configs.push(module.getConfig());
-      const moduleComponentFactory = this.componentFactoryResolver.resolveComponentFactory(Modules[module.getConfig().moduleType]);
+      const config = new KlokModuleConfig();
+      this.configs.push(config);
+      const moduleComponentFactory = this.componentFactoryResolver.resolveComponentFactory(Modules[config.moduleType]);
       const component = this.bashBoardModuleContainer.createComponent(moduleComponentFactory);
-      (<BashBoardModule>component.instance).config = module.getConfig();
+      (<BashBoardModule>component.instance).config = config;
     }
   }
 
@@ -89,6 +88,9 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   public saveLayout(): void {
+    for (let i = 0; i < this.bashBoardModuleContainer.length; i++) {
+      console.log(this.bashBoardModuleContainer.get(i));
+    }
     this.modulesService.saveConfigs(this.configs);
   }
 
